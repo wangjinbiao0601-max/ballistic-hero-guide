@@ -65,6 +65,9 @@ main { max-width:1200px; margin:0 auto; padding:30px 20px; }
 .skill-list { margin-top:8px; }
 .skill-item { padding:6px 10px; background:var(--bg); border-radius:6px; font-size:13px; color:var(--text-secondary); margin-bottom:4px; line-height:1.5; }
 .skill-item::before { content:'▸'; color:var(--accent); margin-right:6px; }
+.pet-detail { margin-top:8px; }
+.pet-detail .skill-name { color:var(--accent-light);font-weight:500; }
+.pet-detail td { font-size:13px;padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top; }
 footer { border-top:1px solid var(--border); padding:30px 20px; text-align:center; color:var(--text-muted); font-size:13px; }
 @media (max-width:768px) { .pet-grid { grid-template-columns:1fr; } .stat-row { grid-template-columns:repeat(5,1fr); gap:4px; } .tab { padding:10px 14px; font-size:13px; } }
 ::-webkit-scrollbar { width:6px; height:6px; }
@@ -143,20 +146,44 @@ const ALL_PETS = [
   {q:'紫',name:'彩虹小马',en:'',type:'防御型',lv:70,stat:[94,124,480,120,90],skill:['高级报恩42%','高级强壮35%']},
   {q:'紫',name:'迪迪',en:'',type:'速度型',lv:70,stat:[124,62,288,150,110],skill:['高级拾取600BP','高级毒气64%+2毒']},
   // 橙
-  {q:'橙',name:'飞翼天狼',en:'',type:'速度型',lv:100,stat:[200,100,460,166,118],skill:['啸月(专属)']},
-  {q:'橙',name:'翠蝶女王',en:'',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['女王的恩赐(专属)']},
-  {q:'橙',name:'缪斯',en:'',type:'攻击型',lv:100,stat:[250,100,615,146,90],skill:['传颂之音(专属)']},
-  {q:'橙',name:'伊卡洛斯',en:'',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['守护之翼','至高牺牲']},
-  {q:'橙',name:'鲸鱼娘',en:'',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['鲸吞','洋流祝福']},
-  {q:'橙',name:'拉霸霸',en:'',type:'速度型',lv:100,stat:[260,100,460,166,138],skill:['暴力夺取(专属)']},
-  {q:'橙',name:'神灯',en:'',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['三个愿望','虚化躯体']},
-  {q:'橙',name:'上古幼龙',en:'',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['无根之火','双相龙鳞']},
-  {q:'橙',name:'魔法黑猫',en:'',type:'速度型',lv:100,stat:[260,100,460,166,138],skill:['禁忌知识','多层护盾']},
-  {q:'橙',name:'驯鹿精灵',en:'',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['圣诞庇佑','强健身躯']},
-  {q:'橙',name:'龙马',en:'',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['跃进重踏','龙气护体']},
-  {q:'橙',name:'丘比特',en:'',type:'速度型',lv:100,stat:[260,100,460,166,138],skill:['真·夺心之箭','圣灵之体']},
-  {q:'橙',name:'彩蛋神兔',en:'',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['重型彩蛋','肉食主义']},
-  {q:'橙',name:'冰雪女王',en:'',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['霜冻之息','永冻之意']}
+  {q:'橙',name:'飞翼天狼',type:'速度型',lv:100,stat:[200,100,460,166,118],skill:['啸月(专属)'],
+   detail:[{name:'啸月',type:'辅助',mp:'150',cd:'4',eff:'回合开始为主人+攻击up+护盾1回合，护盾量=宠物速度×10'}]},
+  {q:'橙',name:'翠蝶女王',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['女王的恩赐(专属)'],
+   detail:[{name:'女王的恩赐',type:'辅助',mp:'80',cd:'2',eff:'为500范围友方回复生命=自身生命上限12%'}]},
+  {q:'橙',name:'缪斯',type:'攻击型',lv:100,stat:[250,100,615,146,90],skill:['传颂之音(专属)'],
+   detail:[{name:'传颂之音',type:'主动',mp:'60',cd:'1',eff:'500范围音波攻击，造成90%伤害'}]},
+  {q:'橙',name:'伊卡洛斯',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['守护之翼','至高牺牲'],
+   detail:[{name:'守护之翼',type:'辅助',mp:'80',cd:'2',eff:'张开护盾阻挡200范围炮弹，减少40%承受伤害'},
+           {name:'至高牺牲',type:'被动',mp:'0',cd:'1',eff:'死亡时恢复其他宠物100%MP、30%HP'}]},
+  {q:'橙',name:'鲸鱼娘',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['鲸吞','洋流祝福'],
+   detail:[{name:'鲸吞',type:'主动',mp:'100',cd:'3',eff:'攻击170%伤害+65%概率驱散对方1个增益，范围100'},
+           {name:'洋流祝福',type:'被动',mp:'0',cd:'1',eff:'回合开始时恢复30MP，玩家恢复50BP'}]},
+  {q:'橙',name:'拉霸霸',type:'速度型',lv:100,stat:[260,100,460,166,138],skill:['暴力夺取(专属)'],
+   detail:[{name:'暴力夺取',type:'主动',mp:'100',cd:'2',eff:'100%伤害+盗取敌方200BP与10怒气给主人'}]},
+  {q:'橙',name:'神灯',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['三个愿望','虚化躯体'],
+   detail:[{name:'三个愿望',type:'辅助',mp:'50',cd:'2',eff:'为主人与2个友方加护盾(25%最大生命)+10%攻击+10%减伤1回合'},
+           {name:'虚化躯体',type:'被动',mp:'0',cd:'0',eff:'非实体躯体降低75%炮弹范围伤害'}]},
+  {q:'橙',name:'上古幼龙',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['无根之火','双相龙鳞'],
+   detail:[{name:'无根之火',type:'主动',mp:'130',cd:'3',eff:'200范围150%基础伤害+20%敌方生命额外伤害(上限50,000)'},
+           {name:'双相龙鳞',type:'被动',mp:'0',cd:'0',eff:'受到伤害时50%概率使本次伤害无效'}]},
+  {q:'橙',name:'魔法黑猫',type:'速度型',lv:100,stat:[260,100,460,166,138],skill:['禁忌知识','多层护盾'],
+   detail:[{name:'禁忌知识',type:'主动',mp:'100',cd:'1',eff:'投3枚硬币1~3次攻击(350范围40%伤害)+随机1种负面效果1回合'},
+           {name:'多层护盾',type:'被动',mp:'0',cd:'0',eff:'每公共回合获得5层25%减伤护盾，受击-1层'}]},
+  {q:'橙',name:'驯鹿精灵',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['圣诞庇佑','强健身躯'],
+   detail:[{name:'圣诞庇佑',type:'辅助',mp:'35',cd:'0',eff:'主人受到攻击时承担30%伤害(按玩家防御)'},
+           {name:'强健身躯',type:'被动',mp:'0',cd:'0',eff:'PetHealthRate+5000(+50%生命)+5层25%减伤'}]},
+  {q:'橙',name:'龙马',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['跃进重踏','龙气护体'],
+   detail:[{name:'跃进重踏',type:'主动',mp:'70',cd:'1',eff:'200范围60%伤害，下次+60%，至多600%'},
+           {name:'龙气护体',type:'被动',mp:'0',cd:'0',eff:'100%减伤→每行动-10%，至多降至20%'}]},
+  {q:'橙',name:'丘比特',type:'速度型',lv:100,stat:[260,100,460,166,138],skill:['真·夺心之箭','圣灵之体'],
+   detail:[{name:'真·夺心之箭',type:'主动',mp:'70',cd:'1',eff:'150范围150%伤害+75%概率虚弱2回合(怒气获取-50%)'},
+           {name:'圣灵之体',type:'被动',mp:'0',cd:'0',eff:'被有负面状态单位攻击时降低95%伤害'}]},
+  {q:'橙',name:'彩蛋神兔',type:'防御型',lv:100,stat:[150,200,768,130,106],skill:['重型彩蛋','肉食主义'],
+   detail:[{name:'重型彩蛋',type:'主动',mp:'70',cd:'1',eff:'250范围100%+50%最大生命攻击力，精英翻倍'},
+           {name:'肉食主义',type:'被动',mp:'0',cd:'0',eff:'50%减伤+50%最大生命+75%攻击吸血'}]},
+  {q:'橙',name:'冰雪女王',type:'攻击型',lv:100,stat:[260,100,615,146,118],skill:['霜冻之息','永冻之意'],
+   detail:[{name:'霜冻之息',type:'主动',mp:'60',cd:'1',eff:'500范围110%伤害'},
+           {name:'永冻之意',type:'被动',mp:'0',cd:'0',eff:'死亡时100%冻结全场所有敌人2回合(受效果命中和抵抗影响)'}]}
 ];
 
 const TYPE_CLASS = {攻击型:'type-atk',防御型:'type-def',速度型:'type-spd'};
@@ -196,11 +223,22 @@ function renderPets(filter) {
       });
       html += `</div>`;
       // Skills
+      const hasDetail = p.detail && p.detail.length > 0;
       html += `<div class="skill-list">`;
       p.skill.forEach(s => {
         html += `<div class="skill-item">${s}</div>`;
       });
       html += `</div>`;
+      // Detail table for orange pets
+      if (hasDetail) {
+        html += `<div style="margin-top:8px;"><span onclick="togglePetDetail(this)" style="font-size:12px;color:var(--accent);cursor:pointer;user-select:none;">▸ 查看技能详情</span></div>`;
+        html += `<div class="pet-detail" style="display:none;margin-top:8px;">`;
+        html += `<table class="skill-table"><thead><tr><th>技能</th><th>类型</th><th>MP</th><th>CD</th><th>效果</th></tr></thead><tbody>`;
+        p.detail.forEach(s => {
+          html += `<tr><td><span class="skill-name">${s.name}</span></td><td>${s.type}</td><td class="skill-cost">${s.mp}</td><td class="skill-cost">${s.cd}</td><td>${s.eff}</td></tr>`;
+        });
+        html += `</tbody></table></div>`;
+      }
       html += `</div>`;
     });
     html += '</div>';
@@ -229,6 +267,14 @@ function getPetImage(name) {
 }
 
 function filterPets(q) { renderPets(q); }
+function togglePetDetail(el) {
+  const detail = el.parentElement.nextElementSibling;
+  if (detail && detail.classList.contains('pet-detail')) {
+    const isHidden = detail.style.display === 'none';
+    detail.style.display = isHidden ? 'block' : 'none';
+    el.textContent = isHidden ? '▾ 收起技能详情' : '▸ 查看技能详情';
+  }
+}
 renderPets('all');
 
 const i18n = {
