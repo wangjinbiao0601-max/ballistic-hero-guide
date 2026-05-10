@@ -75,6 +75,8 @@ main { max-width:1200px; margin:0 auto; padding:30px 20px; }
 .sd-passive { background:rgba(34,197,94,0.15); color:#22c55e; }
 .sd-mp { color:var(--text-muted); background:rgba(100,116,139,0.15); padding:1px 6px; border-radius:4px; }
 .sd-cd { color:var(--text-muted); background:rgba(100,116,139,0.15); padding:1px 6px; border-radius:4px; }
+.sd-dmg { color:var(--accent-light); background:rgba(245,158,11,0.15); padding:1px 6px; border-radius:4px; font-weight:500; }
+.skill-id { color:var(--text-muted); font-weight:400; font-size:11px; margin-right:4px; }
 .skill-detail-eff { font-size:13px; color:var(--text-secondary); line-height:1.6; }
 .pet-detail { margin-top:8px; }
 .pet-detail .skill-name { color:var(--accent-light);font-weight:500; }
@@ -197,6 +199,121 @@ const ALL_PETS = [
            {name:'永冻之意',type:'被动',mp:'0',cd:'0',eff:'死亡时100%冻结全场所有敌人2回合(受效果命中和抵抗影响)'}]}
 ];
 
+// ===== 技能数据库 =====
+const SKILL_DB = {
+  '奋力一击':{id:'21001',type:'主动攻击',mp:26,cd:3,dmg:'80%',eff:'—'},
+  '震荡冲击':{id:'21002',type:'主动攻击',mp:10,cd:1,dmg:'50%',eff:'低耗技能'},
+  '野蛮冲撞':{id:'21003',type:'主动攻击',mp:20,cd:2,dmg:'70%',eff:'—'},
+  '窝心顶':{id:'21004',type:'主动攻击',mp:20,cd:1,dmg:'25%',eff:'推条10%'},
+  '毒气顶':{id:'21005',type:'主动攻击',mp:52,cd:3,dmg:'40%',eff:'附加中毒1层×2回合'},
+  '拾取':{id:'21006',type:'辅助',mp:26,cd:1,dmg:'—',eff:'吸收400范围BP给主人'},
+  '闪电冲击':{id:'21007',type:'主动攻击',mp:80,cd:5,dmg:'70%×3',eff:'大范围优先距离近目标'},
+  '极限打击':{id:'21008',type:'主动攻击',mp:32,cd:4,dmg:'90%',eff:'—'},
+  '盗取':{id:'21009',type:'主动攻击',mp:52,cd:1,dmg:'40%',eff:'盗取敌方200BP给主人(仅PVP)'},
+  '燃烧怒击':{id:'21010',type:'主动攻击',mp:40,cd:5,dmg:'100%',eff:'—'},
+  '灵魂共享':{id:'21012',type:'防御/辅助',mp:20,cd:1,dmg:'—',eff:'18%分担，按玩家防御计算'},
+  '狂击':{id:'21013',type:'主动攻击',mp:32,cd:1,dmg:'100%',eff:'以自身损失生命造成直接伤害'},
+  '喷射火球':{id:'21014',type:'主动攻击',mp:40,cd:5,dmg:'17%×3=51%',eff:'小范围地形破坏'},
+  '报恩':{id:'21015',type:'防御/辅助',mp:40,cd:2,dmg:'—',eff:'主人受攻击时分担25%伤害'},
+  '掘地一尺':{id:'21018',type:'主动攻击',mp:10,cd:1,dmg:'25%',eff:'小范围地形破坏'},
+  '掘地三尺':{id:'21019',type:'主动攻击',mp:26,cd:3,dmg:'40%',eff:'中范围地形破坏'},
+  '波动拳':{id:'21021',type:'主动攻击',mp:20,cd:1,dmg:'35%',eff:'大范围伤害'},
+  '升龙拳':{id:'21022',type:'主动攻击',mp:52,cd:3,dmg:'56%',eff:'大范围伤害'},
+  '破坏顶':{id:'21024',type:'主动攻击',mp:52,cd:3,dmg:'40%',eff:'破坏装甲=自身50%速度值'},
+  '卸力顶':{id:'21025',type:'主动攻击',mp:80,cd:5,dmg:'50%',eff:'75%几率降攻击2回合'},
+  '破防顶':{id:'21026',type:'主动攻击',mp:80,cd:5,dmg:'50%',eff:'75%几率降防御2回合'},
+  '迟缓顶':{id:'21027',type:'主动攻击',mp:80,cd:5,dmg:'50%',eff:'75%几率降速度2回合'},
+  '援护术':{id:'21028',type:'防御/辅助',mp:52,cd:3,dmg:'—',eff:'29%分担，按玩家防御计算'},
+  '守护术':{id:'21029',type:'防御/辅助',mp:64,cd:4,dmg:'—',eff:'32%分担，按玩家防御计算'},
+  '庇佑术':{id:'21030',type:'防御/辅助',mp:80,cd:5,dmg:'—',eff:'36%分担，按玩家防御计算'},
+  '高级奋力一击':{id:'21101',type:'主动攻击',mp:66,cd:3,dmg:'128%',eff:'—'},
+  '高级震荡冲击':{id:'21102',type:'主动攻击',mp:26,cd:1,dmg:'80%',eff:'—'},
+  '高级野蛮冲撞':{id:'21103',type:'主动攻击',mp:50,cd:2,dmg:'112%',eff:'—'},
+  '高级窝心顶':{id:'21104',type:'主动攻击',mp:52,cd:1,dmg:'40%',eff:'推条15%'},
+  '高级毒气顶':{id:'21105',type:'主动攻击',mp:132,cd:3,dmg:'64%',eff:'附加中毒2层×2回合'},
+  '高级燃烧怒击':{id:'21106',type:'主动攻击',mp:103,cd:5,dmg:'160%',eff:'回合开始触发'},
+  '高级闪电冲击':{id:'21107',type:'主动攻击',mp:206,cd:5,dmg:'112%×3',eff:'大范围'},
+  '高级极限打击':{id:'21108',type:'主动攻击',mp:83,cd:4,dmg:'144%',eff:'—'},
+  '高级盗取':{id:'21109',type:'主动攻击',mp:132,cd:3,dmg:'64%',eff:'盗取300BP给主人(仅PVP)'},
+  '高级拾取':{id:'21110',type:'辅助',mp:26,cd:1,dmg:'—',eff:'吸收600范围BP给主人'},
+  '高级换身术':{id:'21111',type:'防御/辅助',mp:300,cd:6,dmg:'—',eff:'承担全部伤害(按宠物防御)'},
+  '高级灵魂共享':{id:'21112',type:'防御/辅助',mp:52,cd:1,dmg:'—',eff:'30%分担，按玩家防御计算'},
+  '高级狂击':{id:'21113',type:'主动攻击',mp:83,cd:1,dmg:'160%',eff:'以自身损失生命造成直接伤害'},
+  '高级喷射火球':{id:'21114',type:'主动攻击',mp:103,cd:5,dmg:'27%×3=81%',eff:'小范围地形破坏'},
+  '高级报恩':{id:'21115',type:'防御/辅助',mp:100,cd:2,dmg:'—',eff:'主人受攻击时分担42%伤害'},
+  '高级掘地一尺':{id:'21118',type:'主动攻击',mp:26,cd:1,dmg:'40%',eff:'小范围地形破坏'},
+  '高级掘地三尺':{id:'21119',type:'主动攻击',mp:66,cd:3,dmg:'64%',eff:'中范围地形破坏'},
+  '高级波动拳':{id:'21121',type:'主动攻击',mp:52,cd:1,dmg:'56%',eff:'大范围伤害'},
+  '高级升龙拳':{id:'21122',type:'主动攻击',mp:132,cd:3,dmg:'90%',eff:'大范围伤害'},
+  '高级破坏顶':{id:'21124',type:'主动攻击',mp:132,cd:3,dmg:'64%',eff:'破坏装甲=自身80%速度值'},
+  '高级卸力顶':{id:'21125',type:'主动攻击',mp:206,cd:5,dmg:'80%',eff:'100%几率降攻击2回合'},
+  '高级破防顶':{id:'21126',type:'主动攻击',mp:206,cd:5,dmg:'80%',eff:'100%几率降防御2回合'},
+  '高级迟缓顶':{id:'21127',type:'主动攻击',mp:206,cd:5,dmg:'80%',eff:'100%几率降速度2回合'},
+  '高级援护术':{id:'21128',type:'防御/辅助',mp:132,cd:3,dmg:'—',eff:'48%分担，按玩家防御计算'},
+  '高级守护术':{id:'21129',type:'防御/辅助',mp:166,cd:4,dmg:'—',eff:'54%分担，按玩家防御计算'},
+  '高级庇佑术':{id:'21130',type:'防御/辅助',mp:206,cd:5,dmg:'—',eff:'60%分担，按玩家防御计算'},
+  '好斗':{id:'22001',type:'被动',mp:0,cd:0,dmg:'—',eff:'攻击力提高10%'},
+  '坚韧':{id:'22002',type:'被动',mp:0,cd:0,dmg:'—',eff:'防御力提高18%'},
+  '强壮':{id:'22003',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命上限提高20%'},
+  '灵巧':{id:'22004',type:'被动',mp:0,cd:0,dmg:'—',eff:'速度提高24%'},
+  '意志':{id:'22005',type:'被动',mp:0,cd:0,dmg:'—',eff:'MP提高30%'},
+  '战术':{id:'22006',type:'被动',mp:0,cd:0,dmg:'—',eff:'所有技能CD-1'},
+  '冲动':{id:'22007',type:'被动',mp:0,cd:0,dmg:'—',eff:'受伤害行动条增加15%'},
+  '专家':{id:'22008',type:'被动',mp:0,cd:0,dmg:'—',eff:'所有技能伤害提高10%'},
+  '重击':{id:'22009',type:'被动',mp:0,cd:0,dmg:'—',eff:'20%概率暴击'},
+  '重伤':{id:'22010',type:'被动',mp:0,cd:0,dmg:'—',eff:'暴击伤害提高30%'},
+  '强袭':{id:'22011',type:'被动',mp:0,cd:0,dmg:'—',eff:'技能MP+21%，伤害+10%'},
+  '生猛':{id:'22012',type:'被动',mp:0,cd:0,dmg:'—',eff:'牺牲25%防御转化为攻击'},
+  '畏缩':{id:'22013',type:'被动',mp:0,cd:0,dmg:'—',eff:'牺牲45%攻击转化为生命'},
+  '回避':{id:'22014',type:'被动',mp:0,cd:0,dmg:'—',eff:'受范围伤害降低22%'},
+  '护身':{id:'22015',type:'被动',mp:0,cd:0,dmg:'—',eff:'首次受伤害降低40%'},
+  '持久':{id:'22016',type:'被动',mp:0,cd:0,dmg:'—',eff:'每次行动回复8%生命值'},
+  '装死':{id:'22017',type:'被动',mp:0,cd:0,dmg:'—',eff:'受致命攻击保留生命(1次/场)'},
+  '狂战':{id:'22018',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命<30%伤害+20%'},
+  '守卫':{id:'22019',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命<30%受伤-25%'},
+  '猎人':{id:'22020',type:'被动',mp:0,cd:0,dmg:'—',eff:'对精英/头目伤害+100%'},
+  '穿透':{id:'22021',type:'被动',mp:0,cd:0,dmg:'—',eff:'攻击穿透目标14%防御'},
+  '装甲':{id:'22022',type:'被动',mp:0,cd:0,dmg:'—',eff:'受所有伤害降低10%'},
+  '加速':{id:'22023',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命<30%速度提升30%'},
+  '超速':{id:'22024',type:'被动',mp:0,cd:0,dmg:'—',eff:'牺牲30%生命→速度(20:1)'},
+  '先手':{id:'22025',type:'被动',mp:0,cd:0,dmg:'—',eff:'战斗开始行动条+60%'},
+  '阴险':{id:'22026',type:'被动',mp:0,cd:0,dmg:'—',eff:'攻击20%概率延长异常1回合'},
+  '续航':{id:'22027',type:'被动',mp:0,cd:0,dmg:'—',eff:'每次行动回复6%MP'},
+  '争先':{id:'22028',type:'被动',mp:0,cd:0,dmg:'—',eff:'消耗BP提升行动条(20BP=5%)'},
+  '精准':{id:'22029',type:'被动',mp:0,cd:0,dmg:'—',eff:'效果命中提高60%'},
+  '高级好斗':{id:'22101',type:'被动',mp:0,cd:0,dmg:'—',eff:'攻击力提高16%'},
+  '高级坚韧':{id:'22102',type:'被动',mp:0,cd:0,dmg:'—',eff:'防御力提高27%'},
+  '高级强壮':{id:'22103',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命上限提高35%'},
+  '高级灵巧':{id:'22104',type:'被动',mp:0,cd:0,dmg:'—',eff:'速度提高36%'},
+  '高级意志':{id:'22105',type:'被动',mp:0,cd:0,dmg:'—',eff:'MP提高48%'},
+  '高级战术':{id:'22106',type:'被动',mp:0,cd:0,dmg:'—',eff:'所有技能CD-1'},
+  '高级冲动':{id:'22107',type:'被动',mp:0,cd:0,dmg:'—',eff:'受伤害行动条增加24%'},
+  '高级专家':{id:'22108',type:'被动',mp:0,cd:0,dmg:'—',eff:'所有技能伤害提高16%'},
+  '高级重击':{id:'22109',type:'被动',mp:0,cd:0,dmg:'—',eff:'32%概率暴击'},
+  '高级重伤':{id:'22110',type:'被动',mp:0,cd:0,dmg:'—',eff:'暴击伤害提高50%'},
+  '高级强袭':{id:'22111',type:'被动',mp:0,cd:0,dmg:'—',eff:'MP+34%，伤害+16%'},
+  '高级生猛':{id:'22112',type:'被动',mp:0,cd:0,dmg:'—',eff:'牺牲40%防御→攻击'},
+  '高级畏缩':{id:'22113',type:'被动',mp:0,cd:0,dmg:'—',eff:'牺牲72%攻击→防御'},
+  '高级回避':{id:'22114',type:'被动',mp:0,cd:0,dmg:'—',eff:'范围伤害降低35%'},
+  '高级护身':{id:'22115',type:'被动',mp:0,cd:0,dmg:'—',eff:'首次伤害降低64%'},
+  '高级持久':{id:'22116',type:'被动',mp:0,cd:0,dmg:'—',eff:'每行动回12%生命'},
+  '高级装死':{id:'22117',type:'被动',mp:0,cd:0,dmg:'—',eff:'致命攻击保留1点生命(1次/场)'},
+  '高级狂战':{id:'22118',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命<40%伤害+32%'},
+  '高级守卫':{id:'22119',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命<40%受伤-40%'},
+  '高级达人':{id:'22120',type:'被动',mp:0,cd:0,dmg:'—',eff:'对精英/头目伤害+100%'},
+  '高级穿透':{id:'22121',type:'被动',mp:0,cd:0,dmg:'—',eff:'穿透目标25%防御'},
+  '高级装甲':{id:'22122',type:'被动',mp:0,cd:0,dmg:'—',eff:'受所有伤害降低16%'},
+  '高级加速':{id:'22123',type:'被动',mp:0,cd:0,dmg:'—',eff:'生命<40%速度提升48%'},
+  '高级超速':{id:'22124',type:'被动',mp:0,cd:0,dmg:'—',eff:'牺牲48%生命→速度(20:1)'},
+  '高级先手':{id:'22125',type:'被动',mp:0,cd:0,dmg:'—',eff:'战斗开始行动条+100%'},
+  '高级阴险':{id:'22126',type:'被动',mp:0,cd:0,dmg:'—',eff:'攻击32%概率延长异常1回合'},
+  '高级续航':{id:'22127',type:'被动',mp:0,cd:0,dmg:'—',eff:'每行动回10%MP'},
+  '高级争先':{id:'22128',type:'被动',mp:0,cd:0,dmg:'—',eff:'消耗BP(20BP=6%行动条)'},
+  '高级再动':{id:'22135',type:'被动',mp:0,cd:0,dmg:'—',eff:'消耗200%行动条两次行动'},
+  '高级精准':{id:'22136',type:'被动',mp:0,cd:0,dmg:'—',eff:'效果命中提高100%'},
+  '高级狡猾':{id:'22137',type:'被动',mp:0,cd:0,dmg:'—',eff:'每10速度+1%效果命中'}
+};
+
 const TYPE_CLASS = {攻击型:'type-atk',防御型:'type-def',速度型:'type-spd'};
 const QLABELS = {白:'q-white',绿:'q-green',蓝:'q-blue',紫:'q-purple',橙:'q-orange'};
 const STAT_LABELS = ['攻击','防御','生命','速度','精准'];
@@ -233,32 +350,35 @@ function renderPets(filter) {
         html += `<div class="stat-item"><div class="stat-val">${v}</div><div class="stat-label">${STAT_LABELS[i]}</div></div>`;
       });
       html += `</div>`;
-      // Skills
-      const hasDetail = p.detail && p.detail.length > 0;
-      if (hasDetail) {
-        // Show each skill with full detail directly
-        html += `<div class="skill-list">`;
-        p.detail.forEach(s => {
+      // Skills - lookup in SKILL_DB
+      html += `<div class="skill-list">`;
+      p.skill.forEach(skillName => {
+        // Try exact match first, then fuzzy match
+        let s = SKILL_DB[skillName];
+        if (!s) {
+          // Try fuzzy: find skill where name is contained in skillName
+          for (const [k,v] of Object.entries(SKILL_DB)) {
+            if (skillName.includes(k)) { s = v; break; }
+          }
+        }
+        if (s) {
           html += `<div class="skill-detail-card">
             <div class="skill-detail-header">
-              <span class="skill-detail-name">${s.name}</span>
+              <span class="skill-detail-name"><span class="skill-id">${s.id}</span> ${skillName}</span>
               <span class="skill-detail-meta">
-                <span class="sd-type ${s.type==='被动'?'sd-passive':s.type==='辅助'?'sd-support':'sd-active'}">${s.type}</span>
-                <span class="sd-mp">MP ${s.mp}</span>
-                <span class="sd-cd">CD ${s.cd}</span>
+                <span class="sd-type ${s.type==='被动'?'sd-passive':s.type.includes('辅助')?'sd-support':'sd-active'}">${s.type}</span>
+                ${s.mp > 0 ? `<span class="sd-mp">MP ${s.mp}</span>` : ''}
+                ${s.cd > 0 ? `<span class="sd-cd">CD ${s.cd}</span>` : ''}
+                ${s.dmg !== '—' ? `<span class="sd-dmg">${s.dmg}</span>` : ''}
               </span>
             </div>
-            <div class="skill-detail-eff">${s.eff}</div>
+            ${s.eff !== '—' ? `<div class="skill-detail-eff">${s.eff}</div>` : ''}
           </div>`;
-        });
-        html += `</div>`;
-      } else {
-        html += `<div class="skill-list">`;
-        p.skill.forEach(s => {
-          html += `<div class="skill-item">${s}</div>`;
-        });
-        html += `</div>`;
-      }
+        } else {
+          html += `<div class="skill-item">${skillName}</div>`;
+        }
+      });
+      html += `</div>`;
       html += `</div>`;
     });
     html += '</div>';
