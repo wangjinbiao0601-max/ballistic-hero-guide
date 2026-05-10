@@ -4,534 +4,76 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ballistic Hero 攻略站 · 弹弹英雄</title>
-<meta name="description" content="Ballistic Hero (弹弹英雄) 中英文攻略站 — 武器图鉴、充值价格、货币系统、宠物攻略、玩法指南，玩家快速查询">
+<meta name="description" content="Ballistic Hero (弹弹英雄) 中英文攻略站 — 武器图鉴、装备系统、宠物攻略，玩家快速查询">
 <style>
 :root {
-  --bg: #0a0e1a;
-  --bg-card: #111827;
-  --bg-card-alt: #1a2332;
-  --text: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent: #f59e0b;
-  --accent-light: #fbbf24;
-  --accent-dim: #d97706;
-  --blue: #3b82f6;
-  --blue-light: #60a5fa;
-  --green: #22c55e;
-  --red: #ef4444;
-  --purple: #a855f7;
-  --border: #1e293b;
-  --border-light: #334155;
-  --s-tier: #f59e0b;
-  --a-tier: #3b82f6;
-  --b-tier: #64748b;
-  --radius: 12px;
-  --radius-sm: 8px;
+  --bg: #0a0e1a; --bg-card: #111827; --bg-card-alt: #1a2332;
+  --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+  --accent: #f59e0b; --accent-light: #fbbf24; --accent-dim: #d97706;
+  --blue: #3b82f6; --blue-light: #60a5fa; --green: #22c55e; --red: #ef4444; --purple: #a855f7;
+  --border: #1e293b; --border-light: #334155;
+  --radius: 12px; --radius-sm: 8px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  min-height: 100vh;
-}
-
-a { color: var(--blue-light); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* Header */
-header {
-  background: linear-gradient(135deg, #0f172a 0%, #1a2332 50%, #0f172a 100%);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 0 20px;
-}
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--accent);
-}
-.logo-icon {
-  width: 32px; height: 32px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  color: #000;
-  font-weight: 900;
-}
-.lang-btn {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border-light);
-  color: var(--text);
-  padding: 6px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.2s;
-}
-.lang-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.lang-toggle-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.lang-label {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-/* Nav */
-nav {
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-}
-nav ul {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  list-style: none;
-  padding: 0 20px;
-}
-nav li a {
-  display: block;
-  padding: 12px 18px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  transition: color 0.2s;
-  border-bottom: 2px solid transparent;
-}
-nav li a:hover, nav li a.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-  text-decoration: none;
-}
-
-/* Main */
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 20px;
-}
-
-/* Sections */
-section {
-  margin-bottom: 50px;
-}
-.section-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.section-desc {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 24px;
-}
-
-/* Hero */
-.hero {
-  background: linear-gradient(135deg, #1a2332 0%, #0f172a 100%);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 40px;
-  margin-bottom: 40px;
-  position: relative;
-  overflow: hidden;
-}
-.hero h1 {
-  font-size: 32px;
-  font-weight: 800;
-  margin-bottom: 10px;
-  position: relative;
-}
-.hero h1 span { color: var(--accent); }
-.hero p {
-  color: var(--text-secondary);
-  font-size: 15px;
-  max-width: 600px;
-  position: relative;
-}
-.hero .badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-  position: relative;
-}
-.badge {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.badge strong { color: var(--accent); }
-
-/* Quick nav cards */
-.quick-nav {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 40px;
-}
-.quick-nav a {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 20px 16px;
-  text-align: center;
-  transition: all 0.2s;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 500;
-}
-.quick-nav a:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
-  text-decoration: none;
-}
-.quick-nav .icon { font-size: 28px; display: block; margin-bottom: 8px; }
-
-/* Cards */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-bottom: 20px;
-}
-.card-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Tier list */
-.tier-section { margin-bottom: 30px; }
-.tier-label {
-  display: inline-block;
-  padding: 4px 14px;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-.tier-s { background: rgba(245,158,11,0.2); color: var(--s-tier); }
-.tier-a { background: rgba(59,130,246,0.2); color: var(--a-tier); }
-.tier-b { background: rgba(100,116,139,0.2); color: var(--b-tier); }
-
-.weapon-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 16px;
-}
-.weapon-card {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.weapon-card:hover {
-  border-color: var(--accent-dim);
-  transform: translateY(-2px);
-}
-.weapon-card.expanded {
-  border-color: var(--accent);
-}
-.weapon-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-}
-.weapon-img {
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
-  object-fit: contain;
-  margin-right: 12px;
-  flex-shrink: 0;
-}
-.weapon-header-left {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-.weapon-name {
-  font-size: 16px;
-  font-weight: 700;
-}
-.weapon-type {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(100,116,139,0.2);
-  color: var(--text-secondary);
-}
-.weapon-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-.weapon-tag {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(59,130,246,0.15);
-  color: var(--blue-light);
-}
-.weapon-desc {
-  color: var(--text-secondary);
-  font-size: 13px;
-  margin-top: 8px;
-}
-.weapon-skills {
-  margin-top: 14px;
-  display: none;
-}
-.weapon-card.expanded .weapon-skills { display: block; }
-
-.skill-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  margin-top: 10px;
-}
-.skill-table th {
-  text-align: left;
-  padding: 8px 10px;
-  background: var(--bg);
-  color: var(--text-muted);
-  font-weight: 500;
-  font-size: 12px;
-  border-bottom: 1px solid var(--border);
-}
-.skill-table td {
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.skill-table tr:last-child td { border-bottom: none; }
-.skill-name {
-  color: var(--accent-light);
-  font-weight: 500;
-  white-space: nowrap;
-}
-.skill-cost {
-  color: var(--text-muted);
-  font-size: 11px;
-  display: block;
-}
-
-/* Price table */
-.price-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-}
-.price-item {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  text-align: center;
-  transition: all 0.2s;
-}
-.price-item:hover {
-  border-color: var(--accent-dim);
-}
-.price-amount {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--accent);
-}
-.price-label {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-}
-.price-usd {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* Currency grid */
-.currency-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
-}
-.currency-card {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 18px;
-}
-.currency-name {
-  font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 4px;
-}
-.currency-desc {
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-.currency-source {
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-.currency-source strong { color: var(--green); }
-
-/* Pets */
-.pet-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 14px;
-}
-.pet-card {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 18px;
-  text-align: center;
-}
-.pet-icon { font-size: 36px; margin-bottom: 8px; }
-.pet-name { font-weight: 700; font-size: 15px; }
-.pet-effect {
-  color: var(--text-secondary);
-  font-size: 13px;
-  margin-top: 6px;
-}
-
-/* Mode cards */
-.mode-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-.mode-card {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-}
-.mode-icon { font-size: 28px; margin-bottom: 8px; }
-.mode-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
-.mode-desc { color: var(--text-secondary); font-size: 13px; }
-
-/* Tips */
-.tip-list {
-  list-style: none;
-  counter-reset: tip;
-}
-.tip-list li {
-  counter-increment: tip;
-  padding: 14px 18px;
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  margin-bottom: 10px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-.tip-list li::before {
-  content: counter(tip);
-  background: var(--accent);
-  color: #000;
-  font-weight: 700;
-  font-size: 13px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.tip-list .tip-text {
-  font-size: 14px;
-  padding-top: 3px;
-}
-
-/* Footer */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 30px 20px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero { padding: 24px; }
-  .hero h1 { font-size: 24px; }
-  .weapon-grid { grid-template-columns: 1fr; }
-  .price-grid { grid-template-columns: repeat(2, 1fr); }
-  nav li a { padding: 10px 12px; font-size: 12px; }
-  .skill-table { font-size: 12px; }
-  .skill-table th, .skill-table td { padding: 6px 8px; }
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+a { color:var(--blue-light); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header { background:linear-gradient(135deg,#0f172a,#1a2332,#0f172a); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; padding:0 20px; }
+.header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { display:flex; align-items:center; gap:10px; font-size:18px; font-weight:700; color:var(--accent); }
+.logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent-dim)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; color:#000; font-weight:900; }
+.lang-btn { background:var(--bg-card-alt); border:1px solid var(--border-light); color:var(--text); padding:6px 14px; border-radius:20px; cursor:pointer; font-size:13px; transition:all .2s; }
+.lang-btn:hover { border-color:var(--accent); color:var(--accent); }
+.lang-toggle-wrap { display:flex; align-items:center; gap:10px; }
+.lang-label { font-size:12px; color:var(--text-muted); }
+.tabs { background:var(--bg-card); border-bottom:1px solid var(--border); overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+.tabs-inner { max-width:1200px; margin:0 auto; display:flex; padding:0 20px; }
+.tab { display:block; padding:12px 22px; font-size:14px; color:var(--text-secondary); border-bottom:2px solid transparent; transition:all .2s; }
+.tab:hover { color:var(--accent); text-decoration:none; }
+.tab.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:500; }
+main { max-width:1200px; margin:0 auto; padding:30px 20px; }
+section { margin-bottom:50px; }
+.section-title { font-size:24px; font-weight:700; color:var(--accent); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.section-desc { color:var(--text-secondary); font-size:14px; margin-bottom:24px; }
+.hero { background:linear-gradient(135deg,#1a2332,#0f172a); border:1px solid var(--border); border-radius:var(--radius); padding:40px; margin-bottom:40px; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; top:-50%; right:-20%; width:400px; height:400px; background:radial-gradient(circle,rgba(245,158,11,0.08) 0%,transparent 70%); pointer-events:none; }
+.hero h1 { font-size:32px; font-weight:800; margin-bottom:10px; position:relative; }
+.hero h1 span { color:var(--accent); }
+.hero p { color:var(--text-secondary); font-size:15px; max-width:600px; position:relative; }
+.badges { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; position:relative; }
+.badge { background:var(--bg-card-alt); border:1px solid var(--border-light); border-radius:6px; padding:8px 14px; font-size:13px; display:flex; align-items:center; gap:6px; }
+.badge strong { color:var(--accent); }
+.nav-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:40px; }
+.nav-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:28px 24px; text-align:center; transition:all .2s; cursor:pointer; text-decoration:none; color:var(--text); }
+.nav-card:hover { border-color:var(--accent); transform:translateY(-3px); text-decoration:none; }
+.nav-card-icon { font-size:40px; display:block; margin-bottom:12px; }
+.nav-card-title { font-size:18px; font-weight:700; margin-bottom:6px; }
+.nav-card-desc { font-size:13px; color:var(--text-secondary); }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+.card-title { font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.currency-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:16px; }
+.currency-card { background:var(--bg-card-alt); border:1px solid var(--border); border-radius:var(--radius-sm); padding:18px; }
+.currency-name { font-weight:700; font-size:15px; margin-bottom:4px; }
+.currency-desc { color:var(--text-secondary); font-size:13px; }
+.currency-source { margin-top:8px; font-size:12px; color:var(--text-muted); }
+.currency-source strong { color:var(--green); }
+footer { border-top:1px solid var(--border); padding:30px 20px; text-align:center; color:var(--text-muted); font-size:13px; }
+@media (max-width:768px) { .hero h1 { font-size:24px; } .hero { padding:24px; } .nav-cards { grid-template-columns:1fr; } .tab { padding:10px 14px; font-size:13px; } }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border-light); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--text-muted); }
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <div class="logo">
+    <a href="index.html" class="logo" style="text-decoration:none">
       <div class="logo-icon">BH</div>
       <span>Ballistic Hero</span>
-    </div>
+    </a>
     <div class="lang-toggle-wrap">
       <span class="lang-label" data-i18n="langLabel">语言</span>
       <button class="lang-btn" id="langToggle" onclick="toggleLang()">English</button>
@@ -539,806 +81,120 @@ footer {
   </div>
 </header>
 
-<nav>
-  <ul>
-    <li><a href="#home" class="active" data-i18n="navHome">首页</a></li>
-    <li><a href="#weapons" data-i18n="navWeapons">武器图鉴</a></li>
-    <li><a href="#pricing" data-i18n="navPricing">充值价格</a></li>
-    <li><a href="#currency" data-i18n="navCurrency">货币系统</a></li>
-    <li><a href="#pets" data-i18n="navPets">宠物</a></li>
-    <li><a href="#modes" data-i18n="navModes">玩法指南</a></li>
-    <li><a href="#tips" data-i18n="navTips">新手攻略</a></li>
-  </ul>
-</nav>
+<div class="tabs">
+  <div class="tabs-inner">
+    <a href="index.html" class="tab active" data-i18n="tabHome">首页</a>
+    <a href="weapons.html" class="tab" data-i18n="tabWeapons">武器</a>
+    <a href="equipment.html" class="tab" data-i18n="tabEquipment">装备</a>
+    <a href="pets.html" class="tab" data-i18n="tabPets">宠物</a>
+  </div>
+</div>
 
 <main>
-
-<!-- 首页 -->
-<section id="home">
-  <div class="hero">
-    <div class="hero-content">
-    <h1><span>Ballistic Hero</span> <span data-i18n="heroTitle">弹弹英雄</span></h1>
-    <p data-i18n="heroDesc">一款全球流行的多人休闲弹射手游。控制独特武器，精确计算发射角度与力度，选择不同类型的弹药，在各种地形上展开激烈对战。由 VNG 发行，支持中英文。</p>
-    <div class="badges">
-      <div class="badge"><span>⭐</span> <span data-i18n="rating">评分</span> <strong>4.5</strong></div>
-      <div class="badge"><span>📦</span> <span data-i18n="size">大小</span> <strong>1.1 GB</strong></div>
-      <div class="badge"><span>🔄</span> <span data-i18n="version">版本</span> <strong>1.1.4</strong></div>
-      <div class="badge"><span>🏢</span> <span data-i18n="publisher">发行</span> <strong>VNG</strong></div>
-      <div class="badge"><span>💰</span> <span data-i18n="iap">内购</span> <strong>$0.99 - $99.99</strong></div>
-    </div>
-    </div><!-- hero-content -->
+<div class="hero">
+  <h1><span>Ballistic Hero</span> <span data-i18n="heroTitle">弹弹英雄</span></h1>
+  <p data-i18n="heroDesc">一款全球流行的多人休闲弹射手游。控制独特武器，精确计算发射角度与力度，选择不同类型的弹药，在各种地形上展开激烈对战。由 VNG 发行，支持中英文。</p>
+  <div class="badges">
+    <div class="badge"><span>⭐</span> <span data-i18n="rating">评分</span> <strong>4.5</strong></div>
+    <div class="badge"><span>📦</span> <span data-i18n="size">大小</span> <strong>1.1 GB</strong></div>
+    <div class="badge"><span>🔄</span> <span data-i18n="version">版本</span> <strong>1.1.4</strong></div>
+    <div class="badge"><span>🏢</span> <span data-i18n="publisher">发行</span> <strong>VNG</strong></div>
+    <div class="badge"><span>💰</span> <span data-i18n="iap">内购</span> <strong>$0.99 - $99.99</strong></div>
   </div>
+</div>
 
-  <div class="quick-nav">
-    <a href="#weapons"><span class="icon">⚔️</span><span data-i18n="qnWeapons">武器图鉴</span></a>
-    <a href="#pricing"><span class="icon">💎</span><span data-i18n="qnPricing">充值价格</span></a>
-    <a href="#currency"><span class="icon">🪙</span><span data-i18n="qnCurrency">货币系统</span></a>
-    <a href="#pets"><span class="icon">🐾</span><span data-i18n="qnPets">宠物图鉴</span></a>
-    <a href="#modes"><span class="icon">🎮</span><span data-i18n="qnModes">玩法指南</span></a>
-    <a href="#tips"><span class="icon">📖</span><span data-i18n="qnTips">新手攻略</span></a>
-  </div>
-</section>
+<div class="nav-cards">
+  <a href="weapons.html" class="nav-card">
+    <span class="nav-card-icon">⚔️</span>
+    <div class="nav-card-title" data-i18n="navCardWeaponTitle">武器图鉴</div>
+    <div class="nav-card-desc" data-i18n="navCardWeaponDesc">7 把传说级武器完整技能数据，点击查看详情</div>
+  </a>
+  <a href="equipment.html" class="nav-card">
+    <span class="nav-card-icon">🛡️</span>
+    <div class="nav-card-title" data-i18n="navCardEquipTitle">装备系统</div>
+    <div class="nav-card-desc" data-i18n="navCardEquipDesc">武器模块、装甲强化、战斗道具一览</div>
+  </a>
+  <a href="pets.html" class="nav-card">
+    <span class="nav-card-icon">🐾</span>
+    <div class="nav-card-title" data-i18n="navCardPetTitle">宠物图鉴</div>
+    <div class="nav-card-desc" data-i18n="navCardPetDesc">萌宠伙伴效果与获取方式</div>
+  </a>
+</div>
 
-<!-- 武器图鉴 -->
-<section id="weapons">
-  <h2 class="section-title">⚔️ <span data-i18n="weaponsTitle">武器图鉴</span></h2>
-  <p class="section-desc" data-i18n="weaponsDesc">7 把传说级武器完整技能数据，点击展开查看详情</p>
-
-  <!-- S Tier -->
-  <div class="tier-section">
-    <div class="tier-label tier-s">🔥 S Tier</div>
-    <div class="weapon-grid">
-      <div class="weapon-card" onclick="toggleWeapon(this)">
-        <div class="weapon-header">
-          <span class="weapon-name">🔵 Blue Flame / 蓝焰</span>
-          <span class="weapon-type" data-i18n="typeStrike">打击型</span>
-        </div>
-        <div class="weapon-tags">
-          <span class="weapon-tag" data-i18n="tagBurn">灼烧</span>
-          <span class="weapon-tag" data-i18n="tagSustain">续航</span>
-          <span class="weapon-tag" data-i18n="tagAoE">范围</span>
-        </div>
-        <div class="weapon-desc" data-i18n="blueFlameDesc">范围灼烧伤害，自带治疗续航，上手简单，新手和高手都适用</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="bfUlt">蓝焰炎流</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="bfUltEff">发射1枚分裂弹，最高处分裂5个蓝焰炮弹，每个造成30%伤害并引爆灼烧效果</td></tr>
-              <tr><td><span class="skill-name" data-i18n="bfBasic">灼热射击</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="bfBasicEff">造成85%伤害，65%概率附加1层灼烧（最多8层）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="bfSkill1">熔甲弹</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP50 · CD6</td><td data-i18n="bfSkill1Eff">造成85%伤害，每层灼烧给予2回合受伤增加效果（每层5%，上限40%）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="bfSkill2">烈焰汲取</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD8</td><td data-i18n="bfSkill2Eff">造成85%伤害，移除所有灼烧，每层生成1个治疗球恢复5%最大生命值</td></tr>
-              <tr><td><span class="skill-name" data-i18n="bfPassive">三连射</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="bfPassiveEff">攻击自带3连发，每发造成原炮弹40%伤害</td></tr>
-              <tr><td><span class="skill-name" data-i18n="bfTactic">弹道净化强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="bfTacticEff">「弹道计算器」LV+3、「净化」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="weapon-card" onclick="toggleWeapon(this)">
-        <div class="weapon-header">
-          <span class="weapon-name">🏹 Cupid's Bow / 爱神之弓</span>
-          <span class="weapon-type" data-i18n="typeArmorPierce">破甲型</span>
-        </div>
-        <div class="weapon-tags">
-          <span class="weapon-tag" data-i18n="tagCrit">暴击</span>
-          <span class="weapon-tag" data-i18n="tagControl">控制</span>
-          <span class="weapon-tag" data-i18n="tagDebuff">减益</span>
-        </div>
-        <div class="weapon-desc" data-i18n="cupidDesc">暴击连招体系，战场控制与减益效果，暴击后获得额外行动条</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="cupidUlt">爱心风暴</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="cupidUltEff">发射风暴弹，产生龙卷风推行目标1000像素，17段共320%伤害。暴击时得25%行动条</td></tr>
-              <tr><td><span class="skill-name" data-i18n="cupidBasic">爱心箭矢</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="cupidBasicEff">造成80%伤害，得100BP。暴击时得25%行动条</td></tr>
-              <tr><td><span class="skill-name" data-i18n="cupidSkill1">内爆弹</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD4</td><td data-i18n="cupidSkill1Eff">范围90%伤害。如暴击，下回合忽视目标40%防御</td></tr>
-              <tr><td><span class="skill-name" data-i18n="cupidSkill2">夺心印记</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD4</td><td data-i18n="cupidSkill2Eff">100%伤害+3回合「夺心」，期间敌人对施放者伤害-35%</td></tr>
-              <tr><td><span class="skill-name" data-i18n="cupidPassive">乘胜追击</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="cupidPassiveEff">连续行动时，本回合攻击+25%，得额外100BP</td></tr>
-              <tr><td><span class="skill-name" data-i18n="cupidTactic">高级狙击强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="cupidTacticEff">「弹仓+1」LV+3、「光学迷彩」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- A Tier -->
-  <div class="tier-section">
-    <div class="tier-label tier-a">A Tier</div>
-    <div class="weapon-grid">
-      <div class="weapon-card" onclick="toggleWeapon(this)">
-        <div class="weapon-header">
-          <span class="weapon-name">🦈 Frenzy Shark / 狂鲨</span>
-          <span class="weapon-type" data-i18n="typeExplosive">爆炸型</span>
-        </div>
-        <div class="weapon-tags">
-          <span class="weapon-tag" data-i18n="tagBleed">失血</span>
-          <span class="weapon-tag" data-i18n="tagTrueDmg">真实伤害</span>
-          <span class="weapon-tag" data-i18n="tagTrap">陷阱</span>
-        </div>
-        <div class="weapon-desc" data-i18n="sharkDesc">流血叠加持续伤害，配合陷阱控制，延长战斗越打越强</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="sharkUlt">巨!齿!鲨!</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="sharkUltEff">发射诱饵炸弹，对沿途敌人120%伤害+3层失血，召唤鲨鱼120%真实伤害。每10层失血多1次攻击</td></tr>
-              <tr><td><span class="skill-name" data-i18n="sharkBasic">撕裂弹</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="sharkBasicEff">90%伤害，100%附加1层失血（最多20层，不可驱散）。每层降1.5%血量与2.5%治疗效果</td></tr>
-              <tr><td><span class="skill-name" data-i18n="sharkSkill1">鲨齿陷阱</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP50 · CD3</td><td data-i18n="sharkSkill1Eff">100%伤害+生成4个陷阱。进入的受额外伤害+禁足+3层失血。20层时禁足转眩晕</td></tr>
-              <tr><td><span class="skill-name" data-i18n="sharkSkill2">寻血猎鲨</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP50 · CD4</td><td data-i18n="sharkSkill2Eff">发射猎鲨炮弹，沿地形前进，触碰敌人90%真实伤害+1层失血</td></tr>
-              <tr><td><span class="skill-name" data-i18n="sharkPassive">韧性皮肤</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="sharkPassiveEff">每个公共回合首次受伤害-50%</td></tr>
-              <tr><td><span class="skill-name" data-i18n="sharkTactic">弹道净化强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="sharkTacticEff">「弹道计算器」LV+3、「净化」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="weapon-card" onclick="toggleWeapon(this)">
-        <div class="weapon-header">
-          <span class="weapon-name">🐱 Cat Attack / 猫咪出击</span>
-          <span class="weapon-type" data-i18n="typeExplosive">爆炸型</span>
-        </div>
-        <div class="weapon-tags">
-          <span class="weapon-tag" data-i18n="tagSummon">召唤</span>
-          <span class="weapon-tag" data-i18n="tagArmorBreak">破甲</span>
-          <span class="weapon-tag" data-i18n="tagPetLink">宠物联动</span>
-        </div>
-        <div class="weapon-desc" data-i18n="catDesc">精准连击，破甲特化，召唤猫咪协助作战并能与宠物联动</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="catUlt">猫咪诱捕器</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="catUltEff">丢毛球召15只猫攻击，35%+5%最大生命值伤害。破甲时额外召2只+140%伤害</td></tr>
-              <tr><td><span class="skill-name" data-i18n="catBasic">多多抓击</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="catBasicEff">5%最大生命值转攻击，70%伤害。破甲时额外1只猫+70%伤害</td></tr>
-              <tr><td><span class="skill-name" data-i18n="catSkill1">碎甲弹</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP50 · CD4</td><td data-i18n="catSkill1Eff">80%+5%最大生命值伤害，较高装甲破坏效果</td></tr>
-              <tr><td><span class="skill-name" data-i18n="catSkill2">压制攻击</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP50 · CD4</td><td data-i18n="catSkill2Eff">85%+5%最大生命值伤害。击杀非玩家单位时恢复所有宠物30%血+40%MP</td></tr>
-              <tr><td><span class="skill-name" data-i18n="catPassive">二次利用</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="catPassiveEff">破甲时获得2回合25%生命值护盾，本局攻击+8%（最多5层）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="catTactic">生命能量强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="catTacticEff">「生命补剂」LV+3、「能量罐」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- B Tier -->
-  <div class="tier-section">
-    <div class="tier-label tier-b">B Tier</div>
-    <div class="weapon-grid">
-      <div class="weapon-card" onclick="toggleWeapon(this)">
-        <div class="weapon-header">
-          <div class="weapon-header-left">
-            <img class="weapon-img" src="images/weapon_dragon.png" alt="Dragon Cannon" loading="lazy">
-            <div>
-              <span class="weapon-name">🐉 Dragon Cannon / 龙炮</span>
-              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
-                <span class="weapon-tag" data-i18n="tagDragonBreath">龙息</span>
-                <span class="weapon-tag" data-i18n="tagTank">坦克</span>
-                <span class="weapon-tag" data-i18n="tagDefToAtk">防转攻</span>
-              </div>
-            </div>
-          </div>
-          <span class="weapon-type" data-i18n="typeExplosive">爆炸型</span>
-        </div>
-        <div class="weapon-desc" data-i18n="dragonDesc">叠龙息层数，防御转攻击，坦度与输出兼备，但需要暖机</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="dragonUlt">龙息弹链</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="dragonUltEff">80%母弹+3波火球（每波5发20%），30%防御转攻击。每层龙息+5%炮弹伤害</td></tr>
-              <tr><td><span class="skill-name" data-i18n="dragonBasic">龙息爆弹</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="dragonBasicEff">30%防转攻，80%伤害，得100BP。每层龙息+5%伤害</td></tr>
-              <tr><td><span class="skill-name" data-i18n="dragonSkill1">龙气弹</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD3</td><td data-i18n="dragonSkill1Eff">120%+30%额外防伤。龙息>5层强化至200%</td></tr>
-              <tr><td><span class="skill-name" data-i18n="dragonSkill2">龙息插板</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD4</td><td data-i18n="dragonSkill2Eff">范围吸引+45%减伤1回合。龙息>5层时+20%减伤+范围扩大</td></tr>
-              <tr><td><span class="skill-name" data-i18n="dragonPassive">龙息转化</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="dragonPassiveEff">每次受伤获1层龙息（持续1回合），每层3%减伤，最多10层</td></tr>
-              <tr><td><span class="skill-name" data-i18n="dragonTactic">高级连射强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="dragonTacticEff">「弹仓+2」LV+3、「散射」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="weapon-card" onclick="toggleWeapon(this)">
-        <div class="weapon-header">
-          <span class="weapon-name">🐚 Armed Conch / 武装海螺</span>
-          <span class="weapon-type" data-i18n="typeStrike">打击型</span>
-        </div>
-        <div class="weapon-tags">
-          <span class="weapon-tag" data-i18n="tagSupport">辅助</span>
-          <span class="weapon-tag" data-i18n="tagShield">护盾</span>
-          <span class="weapon-tag" data-i18n="tagTower">塔类</span>
-        </div>
-        <div class="weapon-desc" data-i18n="conchDesc">团队辅助型，布置信标塔和电击塔，提供护盾与增伤，适合团队作战</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="conchUlt">洋流激励</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="conchUltEff">为队友提供1回合护盾（护甲×4），自身2回合。所有友方2回合40%攻击+隐身，移除负面</td></tr>
-              <tr><td><span class="skill-name" data-i18n="conchBasic">洋流爆弹</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="conchBasicEff">5%最大生命值转攻击，80%伤害。每有1个友方塔类召唤物+15%伤害（上限60%）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="conchSkill1">武装信标</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD5</td><td data-i18n="conchSkill1Eff">布置信标塔，范围友方+20%攻击+40%防御，同时仅1个</td></tr>
-              <tr><td><span class="skill-name" data-i18n="conchSkill2">电击塔</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD2</td><td data-i18n="conchSkill2Eff">布置电击塔，回合开始对1000范围2个敌人150%伤害，存在4回合</td></tr>
-              <tr><td><span class="skill-name" data-i18n="conchPassive">能量回馈</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="conchPassiveEff">回合结束，每有1个友方塔类召唤物，恢复5%血量（上限15%）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="conchTactic">高级装填强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="conchTacticEff">「装药罐」LV+3、「能量罐」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="weapon-card" onclick="toggleWeapon(this)" style="grid-column: span 1;">
-        <div class="weapon-header">
-          <span class="weapon-name">🛰️ Space Cannon / 天基重炮</span>
-          <span class="weapon-type" data-i18n="typeExplosive">爆炸型</span>
-        </div>
-        <div class="weapon-tags">
-          <span class="weapon-tag" data-i18n="tagMark">标记</span>
-          <span class="weapon-tag" data-i18n="tagCounter">反伤</span>
-          <span class="weapon-tag" data-i18n="tagShield">护盾</span>
-        </div>
-        <div class="weapon-desc" data-i18n="spaceDesc">天基标记追击体系，护盾反伤，标记越多伤害越高</div>
-        <div class="weapon-skills">
-          <table class="skill-table">
-            <thead><tr><th data-i18n="skillNameCol">技能</th><th data-i18n="skillTypeCol">类型</th><th data-i18n="skillCostCol">消耗</th><th data-i18n="skillEffectCol">效果</th></tr></thead>
-            <tbody>
-              <tr><td><span class="skill-name" data-i18n="spaceUlt">天基轰炸</span></td><td data-i18n="skillUlt">必杀技</td><td class="skill-cost">—</td><td data-i18n="spaceUltEff">信号弹50%伤害后激光600范围共350%伤害。提升所有友方30%攻击进度</td></tr>
-              <tr><td><span class="skill-name" data-i18n="spaceBasic">标记射击</span></td><td data-i18n="skillBasic">普攻</td><td class="skill-cost">—</td><td data-i18n="spaceBasicEff">30%防转攻，80%伤害。目标带标记时额外发射标记炮弹（每枚60%+100BP）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="spaceSkill1">标记弹</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP100 · CD5</td><td data-i18n="spaceSkill1Eff">400范围85%伤害，添加2层「天基标记」</td></tr>
-              <tr><td><span class="skill-name" data-i18n="spaceSkill2">反射护盾</span></td><td data-i18n="skillWeapon">武器技</td><td class="skill-cost">SP75 · CD5</td><td data-i18n="spaceSkill2Eff">装甲35%护盾+20%减伤+反伤，持续2回合</td></tr>
-              <tr><td><span class="skill-name" data-i18n="spacePassive">纳米装甲</span></td><td data-i18n="skillPassive">被动</td><td class="skill-cost">—</td><td data-i18n="spacePassiveEff">-20%所受伤害，攻击目标+1层标记（每回合最多1层，上限3层）</td></tr>
-              <tr><td><span class="skill-name" data-i18n="spaceTactic">高级连射强化</span></td><td data-i18n="skillTactic">战术</td><td class="skill-cost">—</td><td data-i18n="spaceTacticEff">「弹仓+2」LV+3、「散射」LV+3</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 充值价格 -->
-<section id="pricing">
-  <h2 class="section-title">💎 <span data-i18n="pricingTitle">充值价格表</span></h2>
-  <p class="section-desc" data-i18n="pricingDesc">App Store 内购价格一览，钻石/代币兑换参考</p>
-
-  <div class="card">
-    <div class="card-title" data-i18n="iapTiers">内购档位</div>
-    <div class="price-grid">
-      <div class="price-item"><div class="price-amount">$0.99</div><div class="price-label" data-i18n="tier1">基础礼包</div></div>
-      <div class="price-item"><div class="price-amount">$1.99</div><div class="price-label" data-i18n="tier2">小礼包</div></div>
-      <div class="price-item"><div class="price-amount">$2.99</div><div class="price-label" data-i18n="tier3">标准礼包</div></div>
-      <div class="price-item"><div class="price-amount">$4.99</div><div class="price-label" data-i18n="tier5">特惠礼包</div></div>
-      <div class="price-item"><div class="price-amount">$9.99</div><div class="price-label" data-i18n="tier10">高级礼包</div></div>
-      <div class="price-item"><div class="price-amount">$14.99</div><div class="price-label" data-i18n="tier15">尊享礼包</div></div>
-      <div class="price-item"><div class="price-amount">$19.99</div><div class="price-label" data-i18n="tier20">豪华礼包</div></div>
-      <div class="price-item"><div class="price-amount">$23.99</div><div class="price-label" data-i18n="tier24">超级礼包</div></div>
-      <div class="price-item"><div class="price-amount">$49.99</div><div class="price-label" data-i18n="tier50">史诗礼包</div></div>
-      <div class="price-item" style="border-color: var(--accent-dim);">
-        <div class="price-amount">$99.99</div>
-        <div class="price-label" data-i18n="tier60" style="color: var(--accent-light);">至尊礼包</div>
-        <div class="price-usd" data-i18n="bestValue">最具价值</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title" data-i18n="paymentMethods">充值方式</div>
-    <p style="color: var(--text-secondary); font-size: 14px;">
-      <span data-i18n="paymentDesc">支持以下充值渠道：</span>
-    </p>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;">
-      <span class="badge">App Store</span>
-      <span class="badge">Google Play</span>
-      <span class="badge">SEAGM</span>
-      <span class="badge">Kaleoz</span>
-      <span class="badge">Razer Gold</span>
-      <span class="badge" data-i18n="moreChannels">更多第三方平台</span>
-    </div>
-    <p style="color: var(--text-muted); font-size: 12px; margin-top: 12px;">
-      <span data-i18n="priceNote">* 实际价格可能因地区和汇率有所不同，以游戏内商店显示为准</span>
-    </p>
-  </div>
-</section>
-
-<!-- 货币系统 -->
-<section id="currency">
+<section>
   <h2 class="section-title">🪙 <span data-i18n="currencyTitle">货币系统</span></h2>
   <p class="section-desc" data-i18n="currencyDesc">游戏内各种货币与资源详解</p>
-
   <div class="currency-grid">
-    <div class="currency-card">
-      <div class="currency-name">💎 <span data-i18n="curDiamond">钻石</span></div>
-      <div class="currency-desc" data-i18n="curDiamondDesc">高级货币，用于抽武器、购买特殊道具</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curDiamondSrc">充值购买、活动奖励</span></div>
-    </div>
-    <div class="currency-card">
-      <div class="currency-name">🪙 <span data-i18n="curGold">金币/绑定钻石</span></div>
-      <div class="currency-desc" data-i18n="curGoldDesc">基础货币，用于日常消耗、武器升级</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curGoldSrc">冒险通关星级奖励、日常任务、活动</span></div>
-    </div>
-    <div class="currency-card">
-      <div class="currency-name">⚡ BP <span data-i18n="curBp">(行动点)</span></div>
-      <div class="currency-desc" data-i18n="curBpDesc">每回合行动的资源，使用技能消耗BP</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curBpSrc">普攻击中目标获得</span></div>
-    </div>
-    <div class="currency-card">
-      <div class="currency-name">🔥 <span data-i18n="curAnger">怒气 (Anger)</span></div>
-      <div class="currency-desc" data-i18n="curAngerDesc">积攒到一定程度可释放必杀技</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curAngerSrc">攻击和被攻击积累</span></div>
-    </div>
-    <div class="currency-card">
-      <div class="currency-name">💚 SP</div>
-      <div class="currency-desc" data-i18n="curSpDesc">武器技能专用资源，不同技能消耗不同</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curSpSrc">回合自然恢复、特定道具</span></div>
-    </div>
-    <div class="currency-card">
-      <div class="currency-name">💠 <span data-i18n="curCrystal">能量/晶石</span></div>
-      <div class="currency-desc" data-i18n="curCrystalDesc">地图上散落，收集后可使用特殊能力</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curCrystalSrc">战场收集、击中水晶</span></div>
-    </div>
-    <div class="currency-card">
-      <div class="currency-name">📈 <span data-i18n="curExp">经验 (EXP)</span></div>
-      <div class="currency-desc" data-i18n="curExpDesc">用于提升账号等级，解锁更多内容</div>
-      <div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curExpSrc">对战、每日/每周任务、通行证</span></div>
-    </div>
+    <div class="currency-card"><div class="currency-name">💎 <span data-i18n="curDiamond">钻石</span></div><div class="currency-desc" data-i18n="curDiamondDesc">高级货币，用于抽武器、购买特殊道具</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curDiamondSrc">充值购买、活动奖励</span></div></div>
+    <div class="currency-card"><div class="currency-name">🪙 <span data-i18n="curGold">金币/绑定钻石</span></div><div class="currency-desc" data-i18n="curGoldDesc">基础货币，用于日常消耗、武器升级</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curGoldSrc">冒险通关星级奖励、日常任务、活动</span></div></div>
+    <div class="currency-card"><div class="currency-name">⚡ BP <span data-i18n="curBp">(行动点)</span></div><div class="currency-desc" data-i18n="curBpDesc">每回合行动的资源，使用技能消耗BP</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curBpSrc">普攻击中目标获得</span></div></div>
+    <div class="currency-card"><div class="currency-name">🔥 <span data-i18n="curAnger">怒气 (Anger)</span></div><div class="currency-desc" data-i18n="curAngerDesc">积攒到一定程度可释放必杀技</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curAngerSrc">攻击和被攻击积累</span></div></div>
+    <div class="currency-card"><div class="currency-name">💚 SP</div><div class="currency-desc" data-i18n="curSpDesc">武器技能专用资源，不同技能消耗不同</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curSpSrc">回合自然恢复、特定道具</span></div></div>
+    <div class="currency-card"><div class="currency-name">💠 <span data-i18n="curCrystal">能量/晶石</span></div><div class="currency-desc" data-i18n="curCrystalDesc">地图上散落，收集后可使用特殊能力</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curCrystalSrc">战场收集、击中水晶</span></div></div>
+    <div class="currency-card"><div class="currency-name">📈 <span data-i18n="curExp">经验 (EXP)</span></div><div class="currency-desc" data-i18n="curExpDesc">用于提升账号等级，解锁更多内容</div><div class="currency-source"><strong data-i18n="source">来源：</strong><span data-i18n="curExpSrc">对战、每日/每周任务、通行证</span></div></div>
   </div>
 </section>
-
-<!-- 宠物 -->
-<section id="pets">
-  <h2 class="section-title">🐾 <span data-i18n="petsTitle">宠物图鉴</span></h2>
-  <p class="section-desc" data-i18n="petsDesc">在战斗中提供独特增益的萌宠伙伴</p>
-
-  <div class="pet-grid">
-    <div class="pet-card">
-      <img src="images/pet_bee.png" alt="Bee" loading="lazy" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px;">
-      <div class="pet-name">Bee / <span data-i18n="petBee">蜜蜂</span></div>
-      <div class="pet-effect" data-i18n="petBeeEff">减缓敌人移动速度</div>
-    </div>
-    <div class="pet-card">
-      <img src="images/pet_ghost1.png" alt="Ghost" loading="lazy" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px;">
-      <div class="pet-name">Ghost / <span data-i18n="petGhost">幽灵</span></div>
-      <div class="pet-effect" data-i18n="petGhostEff">获得额外行动时间</div>
-    </div>
-    <div class="pet-card">
-      <img src="images/pet_bug.png" alt="Bug" loading="lazy" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px;">
-      <div class="pet-name">Bug / <span data-i18n="petBug">甲虫</span></div>
-      <div class="pet-effect" data-i18n="petBugEff">造成额外范围伤害</div>
-    </div>
-    <div class="pet-card">
-      <img src="images/pet_ghost2.png" alt="Phantom" loading="lazy" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px;">
-      <div class="pet-name">Phantom / <span data-i18n="petPhantom">幻影</span></div>
-      <div class="pet-effect" data-i18n="petPhantomEff">提升攻击力</div>
-    </div>
-    <div class="pet-card">
-      <img src="images/pet_wizard.png" alt="Wizard" loading="lazy" style="width:64px;height:64px;object-fit:contain;margin-bottom:8px;">
-      <div class="pet-name">Wizard / <span data-i18n="petWizard">巫师</span></div>
-      <div class="pet-effect" data-i18n="petWizardEff">提供治疗和护盾</div>
-    </div>
-    <div class="pet-card" style="border-style: dashed;">
-      <div class="pet-icon" style="font-size:36px;">❓</div>
-      <div class="pet-name" data-i18n="petMore">更多宠物</div>
-      <div class="pet-effect" data-i18n="petMoreEff">游戏中还有更多宠物等你发现！可通过活动、抽奖获取</div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top: 20px;">
-    <div class="card-title" data-i18n="petSystem">宠物系统说明</div>
-    <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 14px; line-height: 2;">
-      <li data-i18n="petNote1">宠物可以通过升级来增强能力</li>
-      <li data-i18n="petNote2">宠物会在特定条件下自动激活</li>
-      <li data-i18n="petNote3">选择匹配你玩法的宠物可获得显著优势</li>
-      <li data-i18n="petNote4">部分武器技能可与宠物联动（如猫咪出击的压制攻击）</li>
-    </ul>
-  </div>
-</section>
-
-<!-- 玩法指南 -->
-<section id="modes">
-  <h2 class="section-title">🎮 <span data-i18n="modesTitle">玩法指南</span></h2>
-  <p class="section-desc" data-i18n="modesDesc">了解游戏核心机制和各个模式</p>
-
-  <div class="card">
-    <div class="card-title">🎯 <span data-i18n="coreMech">核心机制</span></div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-      <div style="background: var(--bg-card-alt); border-radius: var(--radius-sm); padding: 16px;">
-        <div style="font-weight: 700; font-size: 14px; margin-bottom: 6px;">🎯 <span data-i18n="mechAim">弹道瞄准</span></div>
-        <div style="color: var(--text-secondary); font-size: 13px;" data-i18n="mechAimDesc">拉动炮管 → 调整角度 → 控制力度 → 考虑风向 → 发射</div>
-      </div>
-      <div style="background: var(--bg-card-alt); border-radius: var(--radius-sm); padding: 16px;">
-        <div style="font-weight: 700; font-size: 14px; margin-bottom: 6px;">💨 <span data-i18n="mechWind">风力系统</span></div>
-        <div style="color: var(--text-secondary); font-size: 13px;" data-i18n="mechWindDesc">风向和风速会影响弹道轨迹，需要实时调整瞄准</div>
-      </div>
-      <div style="background: var(--bg-card-alt); border-radius: var(--radius-sm); padding: 16px;">
-        <div style="font-weight: 700; font-size: 14px; margin-bottom: 6px;">⛰️ <span data-i18n="mechTerrain">地形破坏</span></div>
-        <div style="color: var(--text-secondary); font-size: 13px;" data-i18n="mechTerrainDesc">炮弹可破坏地形，可将敌人埋入坑中直接获胜</div>
-      </div>
-      <div style="background: var(--bg-card-alt); border-radius: var(--radius-sm); padding: 16px;">
-        <div style="font-weight: 700; font-size: 14px; margin-bottom: 6px;">🔄 <span data-i18n="mechTurn">回合制</span></div>
-        <div style="color: var(--text-secondary); font-size: 13px;" data-i18n="mechTurnDesc">每人每回合一次行动，可使用普攻/技能/移动道具</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title" data-i18n="gameModes">游戏模式</div>
-    <div class="mode-grid">
-      <div class="mode-card">
-        <div class="mode-icon">🤖</div>
-        <div class="mode-title" data-i18n="modeAdventure">冒险模式 (PvE)</div>
-        <div class="mode-desc" data-i18n="modeAdventureDesc">对战 AI 敌人，练习瞄准和风力判断，包括 Boss 战。适合新手练习</div>
-      </div>
-      <div class="mode-card">
-        <div class="mode-icon">🏆</div>
-        <div class="mode-title" data-i18n="modeRanked">排位赛 (PvP)</div>
-        <div class="mode-desc" data-i18n="modeRankedDesc">1v1 或团队对战，提升段位。胜利获得经验与货币</div>
-      </div>
-      <div class="mode-card">
-        <div class="mode-icon">👥</div>
-        <div class="mode-title" data-i18n="mode3v3">3v3 团队战</div>
-        <div class="mode-desc" data-i18n="mode3v3Desc">3人组队对战，团队配合与实时语音聊天</div>
-      </div>
-      <div class="mode-card">
-        <div class="mode-icon">⚔️</div>
-        <div class="mode-title" data-i18n="modeGuild">公会战</div>
-        <div class="mode-desc" data-i18n="modeGuildDesc">公会之间的对战，争夺荣誉和奖励</div>
-      </div>
-      <div class="mode-card">
-        <div class="mode-icon">🤝</div>
-        <div class="mode-title" data-i18n="modeFriendly">友谊赛</div>
-        <div class="mode-desc" data-i18n="modeFriendlyDesc">与好友自由对战，不影响排位</div>
-      </div>
-      <div class="mode-card">
-        <div class="mode-icon">👑</div>
-        <div class="mode-title" data-i18n="modeBoss">单人 Boss 战</div>
-        <div class="mode-desc" data-i18n="modeBossDesc">单独挑战强力 Boss，测试最高火力输出</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 新手攻略 -->
-<section id="tips">
-  <h2 class="section-title">📖 <span data-i18n="tipsTitle">新手攻略</span></h2>
-  <p class="section-desc" data-i18n="tipsDesc">快速上手 Ballistic Hero 的实用建议</p>
-
-  <div class="card">
-    <div class="card-title" data-i18n="quickTips">快速上手建议</div>
-    <ol class="tip-list">
-      <li><span class="tip-text" data-i18n="tip1">先在冒险模式练习——这是熟悉瞄准、风速和地形的安全环境，没有排位压力</span></li>
-      <li><span class="tip-text" data-i18n="tip2">优先选择蓝焰 (Blue Flame) 作为入门武器——操作简单，自带治疗，容错率高</span></li>
-      <li><span class="tip-text" data-i18n="tip3">注意定位！高地优势 + 掩体掩护，迫使对手做出困难射击</span></li>
-      <li><span class="tip-text" data-i18n="tip4">合理使用移动技能——即使延迟攻击也要先占领有利位置</span></li>
-      <li><span class="tip-text" data-i18n="tip5">每天完成每日任务和活跃度，稳定获取经验和资源</span></li>
-      <li><span class="tip-text" data-i18n="tip6">关注官方社媒发布的兑换码，可以免费领取奖励</span></li>
-      <li><span class="tip-text" data-i18n="tip7">先升武器再升宠物，武器的提升对战斗力影响更直接</span></li>
-      <li><span class="tip-text" data-i18n="tip8">组队时善用实时语音，团队沟通是胜利的关键</span></li>
-    </ol>
-  </div>
-
-  <div class="card">
-    <div class="card-title" data-i18n="f2pTips">零氪/微氪建议</div>
-    <div style="color: var(--text-secondary); font-size: 14px; line-height: 1.8;">
-      <p data-i18n="f2pTip1">• 游戏不强制付费，排位奖励对所有玩家开放</p>
-      <p data-i18n="f2pTip2">• 钻石优先用于武器抽奖，选择适合自己的武器比收藏更重要</p>
-      <p data-i18n="f2pTip3">• 绑定钻石可购买日常资源，不要全部花光，留一些应对限时活动</p>
-      <p data-i18n="f2pTip4">• 日/周任务一定要做，这是最主要的免费资源来源</p>
-      <p data-i18n="f2pTip5">• 微氪建议从 $4.99 和 $9.99 档位开始，性价比最高</p>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer>
   <p data-i18n="footerText">Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点</p>
-  <p style="margin-top: 6px; font-size: 12px;" data-i18n="footerContact">如有错误或补充，欢迎反馈</p>
+  <p style="margin-top:6px;font-size:12px;" data-i18n="footerContact">如有错误或补充，欢迎反馈</p>
 </footer>
 
 <script>
-// ===== i18n =====
 const i18n = {
   zh: {
-    langLabel: '语言',
-    navHome: '首页', navWeapons: '武器图鉴', navPricing: '充值价格', navCurrency: '货币系统',
-    navPets: '宠物', navModes: '玩法指南', navTips: '新手攻略',
-    heroTitle: '弹弹英雄', heroDesc: '一款全球流行的多人休闲弹射手游。控制独特武器，精确计算发射角度与力度，选择不同类型的弹药，在各种地形上展开激烈对战。由 VNG 发行，支持中英文。',
-    rating: '评分', size: '大小', version: '版本', publisher: '发行', iap: '内购',
-    qnWeapons: '武器图鉴', qnPricing: '充值价格', qnCurrency: '货币系统', qnPets: '宠物图鉴', qnModes: '玩法指南', qnTips: '新手攻略',
-    weaponsTitle: '武器图鉴', weaponsDesc: '7 把传说级武器完整技能数据，点击展开查看详情',
-    typeStrike: '打击型', typeExplosive: '爆炸型', typeArmorPierce: '破甲型',
-    tagBurn: '灼烧', tagSustain: '续航', tagAoE: '范围', tagCrit: '暴击', tagControl: '控制', tagDebuff: '减益',
-    tagBleed: '失血', tagTrueDmg: '真实伤害', tagTrap: '陷阱', tagSummon: '召唤', tagArmorBreak: '破甲', tagPetLink: '宠物联动',
-    tagDragonBreath: '龙息', tagTank: '坦克', tagDefToAtk: '防转攻', tagSupport: '辅助', tagShield: '护盾', tagTower: '塔类',
-    tagMark: '标记', tagCounter: '反伤',
-    skillNameCol: '技能', skillTypeCol: '类型', skillCostCol: '消耗', skillEffectCol: '效果',
-    skillUlt: '必杀技', skillBasic: '普攻', skillWeapon: '武器技', skillPassive: '被动', skillTactic: '战术',
-    blueFlameDesc: '范围灼烧伤害，自带治疗续航，上手简单，新手和高手都适用',
-    cupidDesc: '暴击连招体系，战场控制与减益效果，暴击后获得额外行动条',
-    sharkDesc: '流血叠加持续伤害，配合陷阱控制，延长战斗越打越强',
-    catDesc: '精准连击，破甲特化，召唤猫咪协助作战并能与宠物联动',
-    dragonDesc: '叠龙息层数，防御转攻击，坦度与输出兼备，但需要暖机',
-    conchDesc: '团队辅助型，布置信标塔和电击塔，提供护盾与增伤，适合团队作战',
-    spaceDesc: '天基标记追击体系，护盾反伤，标记越多伤害越高',
-    // Blue Flame skills
-    bfUlt: '蓝焰炎流', bfUltEff: '发射1枚分裂弹，最高处分裂5个蓝焰炮弹，每个造成30%伤害并引爆灼烧效果',
-    bfBasic: '灼热射击', bfBasicEff: '造成85%伤害，65%概率附加1层灼烧（最多8层）',
-    bfSkill1: '熔甲弹', bfSkill1Eff: '造成85%伤害，每层灼烧给予2回合受伤增加效果（每层5%，上限40%）',
-    bfSkill2: '烈焰汲取', bfSkill2Eff: '造成85%伤害，移除所有灼烧，每层生成1个治疗球恢复5%最大生命值',
-    bfPassive: '三连射', bfPassiveEff: '攻击自带3连发，每发造成原炮弹40%伤害',
-    bfTactic: '弹道净化强化', bfTacticEff: '「弹道计算器」LV+3、「净化」LV+3',
-    // Cupid skills
-    cupidUlt: '爱心风暴', cupidUltEff: '发射风暴弹，产生龙卷风推行目标1000像素，17段共320%伤害。暴击时得25%行动条',
-    cupidBasic: '爱心箭矢', cupidBasicEff: '造成80%伤害，得100BP。暴击时得25%行动条',
-    cupidSkill1: '内爆弹', cupidSkill1Eff: '范围90%伤害。如暴击，下回合忽视目标40%防御',
-    cupidSkill2: '夺心印记', cupidSkill2Eff: '100%伤害+3回合「夺心」，期间敌人对施放者伤害-35%',
-    cupidPassive: '乘胜追击', cupidPassiveEff: '连续行动时，本回合攻击+25%，得额外100BP',
-    cupidTactic: '高级狙击强化', cupidTacticEff: '「弹仓+1」LV+3、「光学迷彩」LV+3',
-    // Dragon skills
-    dragonUlt: '龙息弹链', dragonUltEff: '80%母弹+3波火球（每波5发20%），30%防御转攻击。每层龙息+5%炮弹伤害',
-    dragonBasic: '龙息爆弹', dragonBasicEff: '30%防转攻，80%伤害，得100BP。每层龙息+5%伤害',
-    dragonSkill1: '龙气弹', dragonSkill1Eff: '120%+30%额外防伤。龙息>5层强化至200%',
-    dragonSkill2: '龙息插板', dragonSkill2Eff: '范围吸引+45%减伤1回合。龙息>5层时+20%减伤+范围扩大',
-    dragonPassive: '龙息转化', dragonPassiveEff: '每次受伤获1层龙息（持续1回合），每层3%减伤，最多10层',
-    dragonTactic: '高级连射强化', dragonTacticEff: '「弹仓+2」LV+3、「散射」LV+3',
-    // Conch skills
-    conchUlt: '洋流激励', conchUltEff: '为队友提供1回合护盾（护甲×4），自身2回合。所有友方2回合40%攻击+隐身，移除负面',
-    conchBasic: '洋流爆弹', conchBasicEff: '5%最大生命值转攻击，80%伤害。每有1个友方塔类召唤物+15%伤害（上限60%）',
-    conchSkill1: '武装信标', conchSkill1Eff: '布置信标塔，范围友方+20%攻击+40%防御，同时仅1个',
-    conchSkill2: '电击塔', conchSkill2Eff: '布置电击塔，回合开始对1000范围2个敌人150%伤害，存在4回合',
-    conchPassive: '能量回馈', conchPassiveEff: '回合结束，每有1个友方塔类召唤物，恢复5%血量（上限15%）',
-    conchTactic: '高级装填强化', conchTacticEff: '「装药罐」LV+3、「能量罐」LV+3',
-    // Shark skills
-    sharkUlt: '巨!齿!鲨!', sharkUltEff: '发射诱饵炸弹，对沿途敌人120%伤害+3层失血，召唤鲨鱼120%真实伤害。每10层失血多1次攻击',
-    sharkBasic: '撕裂弹', sharkBasicEff: '90%伤害，100%附加1层失血（最多20层，不可驱散）。每层降1.5%血量与2.5%治疗效果',
-    sharkSkill1: '鲨齿陷阱', sharkSkill1Eff: '100%伤害+生成4个陷阱。进入的受额外伤害+禁足+3层失血。20层时禁足转眩晕',
-    sharkSkill2: '寻血猎鲨', sharkSkill2Eff: '发射猎鲨炮弹，沿地形前进，触碰敌人90%真实伤害+1层失血',
-    sharkPassive: '韧性皮肤', sharkPassiveEff: '每个公共回合首次受伤害-50%',
-    sharkTactic: '弹道净化强化', sharkTacticEff: '「弹道计算器」LV+3、「净化」LV+3',
-    // Cat skills
-    catUlt: '猫咪诱捕器', catUltEff: '丢毛球召15只猫攻击，35%+5%最大生命值伤害。破甲时额外召2只+140%伤害',
-    catBasic: '多多抓击', catBasicEff: '5%最大生命值转攻击，70%伤害。破甲时额外1只猫+70%伤害',
-    catSkill1: '碎甲弹', catSkill1Eff: '80%+5%最大生命值伤害，较高装甲破坏效果',
-    catSkill2: '压制攻击', catSkill2Eff: '85%+5%最大生命值伤害。击杀非玩家单位时恢复所有宠物30%血+40%MP',
-    catPassive: '二次利用', catPassiveEff: '破甲时获得2回合25%生命值护盾，本局攻击+8%（最多5层）',
-    catTactic: '生命能量强化', catTacticEff: '「生命补剂」LV+3、「能量罐」LV+3',
-    // Space Cannon skills
-    spaceUlt: '天基轰炸', spaceUltEff: '信号弹50%伤害后激光600范围共350%伤害。提升所有友方30%攻击进度',
-    spaceBasic: '标记射击', spaceBasicEff: '30%防转攻，80%伤害。目标带标记时额外发射标记炮弹（每枚60%+100BP）',
-    spaceSkill1: '标记弹', spaceSkill1Eff: '400范围85%伤害，添加2层「天基标记」',
-    spaceSkill2: '反射护盾', spaceSkill2Eff: '装甲35%护盾+20%减伤+反伤，持续2回合',
-    spacePassive: '纳米装甲', spacePassiveEff: '-20%所受伤害，攻击目标+1层标记（每回合最多1层，上限3层）',
-    spaceTactic: '高级连射强化', spaceTacticEff: '「弹仓+2」LV+3、「散射」LV+3',
-    // Pricing
-    pricingTitle: '充值价格表', pricingDesc: 'App Store 内购价格一览，钻石/代币兑换参考',
-    iapTiers: '内购档位', paymentMethods: '充值方式', paymentDesc: '支持以下充值渠道：',
-    moreChannels: '更多第三方平台', priceNote: '* 实际价格可能因地区和汇率有所不同，以游戏内商店显示为准',
-    tier1: '基础礼包', tier2: '小礼包', tier3: '标准礼包', tier5: '特惠礼包',
-    tier10: '高级礼包', tier15: '尊享礼包', tier20: '豪华礼包', tier24: '超级礼包',
-    tier50: '史诗礼包', tier60: '至尊礼包', bestValue: '最具价值',
-    // Currency
-    currencyTitle: '货币系统', currencyDesc: '游戏内各种货币与资源详解',
-    curDiamond: '钻石', curDiamondDesc: '高级货币，用于抽武器、购买特殊道具', curDiamondSrc: '充值购买、活动奖励',
-    curGold: '金币/绑定钻石', curGoldDesc: '基础货币，用于日常消耗、武器升级', curGoldSrc: '冒险通关星级奖励、日常任务、活动',
-    curBp: '(行动点)', curBpDesc: '每回合行动的资源，使用技能消耗BP', curBpSrc: '普攻击中目标获得',
-    curAnger: '怒气 (Anger)', curAngerDesc: '积攒到一定程度可释放必杀技', curAngerSrc: '攻击和被攻击积累',
-    curSpDesc: '武器技能专用资源，不同技能消耗不同', curSpSrc: '回合自然恢复、特定道具',
-    curCrystal: '能量/晶石', curCrystalDesc: '地图上散落，收集后可使用特殊能力', curCrystalSrc: '战场收集、击中水晶',
-    curExp: '经验 (EXP)', curExpDesc: '用于提升账号等级，解锁更多内容', curExpSrc: '对战、每日/每周任务、通行证',
-    source: '来源：',
-    // Pets
-    petsTitle: '宠物图鉴', petsDesc: '在战斗中提供独特增益的萌宠伙伴',
-    petBee: '蜜蜂', petBeeEff: '减缓敌人移动速度',
-    petGhost: '幽灵', petGhostEff: '获得额外行动时间',
-    petBug: '甲虫', petBugEff: '造成额外范围伤害',
-    petPhantom: '幻影', petPhantomEff: '提升攻击力',
-    petWizard: '巫师', petWizardEff: '提供治疗和护盾',
-    petMore: '更多宠物', petMoreEff: '游戏中还有更多宠物等你发现！可通过活动、抽奖获取',
-    petSystem: '宠物系统说明',
-    petNote1: '宠物可以通过升级来增强能力',
-    petNote2: '宠物会在特定条件下自动激活',
-    petNote3: '选择匹配你玩法的宠物可获得显著优势',
-    petNote4: '部分武器技能可与宠物联动（如猫咪出击的压制攻击）',
-    // Modes
-    modesTitle: '玩法指南', modesDesc: '了解游戏核心机制和各个模式',
-    coreMech: '核心机制', gameModes: '游戏模式',
-    mechAim: '弹道瞄准', mechAimDesc: '拉动炮管 → 调整角度 → 控制力度 → 考虑风向 → 发射',
-    mechWind: '风力系统', mechWindDesc: '风向和风速会影响弹道轨迹，需要实时调整瞄准',
-    mechTerrain: '地形破坏', mechTerrainDesc: '炮弹可破坏地形，可将敌人埋入坑中直接获胜',
-    mechTurn: '回合制', mechTurnDesc: '每人每回合一次行动，可使用普攻/技能/移动道具',
-    modeAdventure: '冒险模式 (PvE)', modeAdventureDesc: '对战 AI 敌人，练习瞄准和风力判断，包括 Boss 战。适合新手练习',
-    modeRanked: '排位赛 (PvP)', modeRankedDesc: '1v1 或团队对战，提升段位。胜利获得经验与货币',
-    mode3v3: '3v3 团队战', mode3v3Desc: '3人组队对战，团队配合与实时语音聊天',
-    modeGuild: '公会战', modeGuildDesc: '公会之间的对战，争夺荣誉和奖励',
-    modeFriendly: '友谊赛', modeFriendlyDesc: '与好友自由对战，不影响排位',
-    modeBoss: '单人 Boss 战', modeBossDesc: '单独挑战强力 Boss，测试最高火力输出',
-    // Tips
-    tipsTitle: '新手攻略', tipsDesc: '快速上手 Ballistic Hero 的实用建议',
-    quickTips: '快速上手建议', f2pTips: '零氪/微氪建议',
-    tip1: '先在冒险模式练习——这是熟悉瞄准、风速和地形的安全环境，没有排位压力',
-    tip2: '优先选择蓝焰 (Blue Flame) 作为入门武器——操作简单，自带治疗，容错率高',
-    tip3: '注意定位！高地优势 + 掩体掩护，迫使对手做出困难射击',
-    tip4: '合理使用移动技能——即使延迟攻击也要先占领有利位置',
-    tip5: '每天完成每日任务和活跃度，稳定获取经验和资源',
-    tip6: '关注官方社媒发布的兑换码，可以免费领取奖励',
-    tip7: '先升武器再升宠物，武器的提升对战斗力影响更直接',
-    tip8: '组队时善用实时语音，团队沟通是胜利的关键',
-    f2pTip1: '• 游戏不强制付费，排位奖励对所有玩家开放',
-    f2pTip2: '• 钻石优先用于武器抽奖，选择适合自己的武器比收藏更重要',
-    f2pTip3: '• 绑定钻石可购买日常资源，不要全部花光，留一些应对限时活动',
-    f2pTip4: '• 日/周任务一定要做，这是最主要的免费资源来源',
-    f2pTip5: '• 微氪建议从 $4.99 和 $9.99 档位开始，性价比最高',
-    footerText: 'Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点',
-    footerContact: '如有错误或补充，欢迎反馈'
+    langLabel:'语言',tabHome:'首页',tabWeapons:'武器',tabEquipment:'装备',tabPets:'宠物',
+    heroTitle:'弹弹英雄',heroDesc:'一款全球流行的多人休闲弹射手游。控制独特武器，精确计算发射角度与力度，选择不同类型的弹药，在各种地形上展开激烈对战。由 VNG 发行，支持中英文。',
+    rating:'评分',size:'大小',version:'版本',publisher:'发行',iap:'内购',
+    navCardWeaponTitle:'武器图鉴',navCardWeaponDesc:'7 把传说级武器完整技能数据，点击查看详情',
+    navCardEquipTitle:'装备系统',navCardEquipDesc:'武器模块、装甲强化、战斗道具一览',
+    navCardPetTitle:'宠物图鉴',navCardPetDesc:'萌宠伙伴效果与获取方式',
+    currencyTitle:'货币系统',currencyDesc:'游戏内各种货币与资源详解',
+    curDiamond:'钻石',curDiamondDesc:'高级货币，用于抽武器、购买特殊道具',curDiamondSrc:'充值购买、活动奖励',
+    curGold:'金币/绑定钻石',curGoldDesc:'基础货币，用于日常消耗、武器升级',curGoldSrc:'冒险通关星级奖励、日常任务、活动',
+    curBp:'(行动点)',curBpDesc:'每回合行动的资源，使用技能消耗BP',curBpSrc:'普攻击中目标获得',
+    curAnger:'怒气 (Anger)',curAngerDesc:'积攒到一定程度可释放必杀技',curAngerSrc:'攻击和被攻击积累',
+    curSpDesc:'武器技能专用资源，不同技能消耗不同',curSpSrc:'回合自然恢复、特定道具',
+    curCrystal:'能量/晶石',curCrystalDesc:'地图上散落，收集后可使用特殊能力',curCrystalSrc:'战场收集、击中水晶',
+    curExp:'经验 (EXP)',curExpDesc:'用于提升账号等级，解锁更多内容',curExpSrc:'对战、每日/每周任务、通行证',
+    source:'来源：',
+    footerText:'Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点',
+    footerContact:'如有错误或补充，欢迎反馈'
   },
   en: {
-    langLabel: 'Language',
-    navHome: 'Home', navWeapons: 'Weapons', navPricing: 'Pricing', navCurrency: 'Currency',
-    navPets: 'Pets', navModes: 'Game Modes', navTips: 'Guide',
-    heroTitle: 'Ballistic Hero', heroDesc: 'A globally popular multiplayer online casual battle game. Control uniquely designed weapons, precisely calculate launch angle and power, select different ammo types, and engage in intense battles across various terrains. Published by VNG.' ,
-    rating: 'Rating', size: 'Size', version: 'Version', publisher: 'Publisher', iap: 'IAP',
-    qnWeapons: 'Weapons', qnPricing: 'Pricing', qnCurrency: 'Currency', qnPets: 'Pets', qnModes: 'Modes', qnTips: 'Guide',
-    weaponsTitle: 'Weapon Guide', weaponsDesc: 'Complete skill data for all 7 Legendary weapons. Click to expand details.',
-    typeStrike: 'Strike', typeExplosive: 'Explosive', typeArmorPierce: 'Armor Pierce',
-    tagBurn: 'Burn', tagSustain: 'Sustain', tagAoE: 'AoE', tagCrit: 'Critical', tagControl: 'Control', tagDebuff: 'Debuff',
-    tagBleed: 'Bleed', tagTrueDmg: 'True DMG', tagTrap: 'Trap', tagSummon: 'Summon', tagArmorBreak: 'Armor Break', tagPetLink: 'Pet Link',
-    tagDragonBreath: 'Dragon Breath', tagTank: 'Tank', tagDefToAtk: 'Def→Atk', tagSupport: 'Support', tagShield: 'Shield', tagTower: 'Tower',
-    tagMark: 'Mark', tagCounter: 'Counter',
-    skillNameCol: 'Skill', skillTypeCol: 'Type', skillCostCol: 'Cost', skillEffectCol: 'Effect',
-    skillUlt: 'Ultimate', skillBasic: 'Basic', skillWeapon: 'Weapon Skill', skillPassive: 'Passive', skillTactic: 'Tactic',
-    blueFlameDesc: 'AoE burn damage with built-in healing. Easy to use — great for both beginners and veterans.',
-    cupidDesc: 'Crit-based combos with battlefield control and debuffs. Gains extra action bar on crit.',
-    sharkDesc: 'Bleed stacking damage over time with trap control. Stronger the longer the fight goes.',
-    catDesc: 'Precision chains, armor break specialization, summon cats and link with pets.',
-    dragonDesc: 'Stack Dragon Breath, convert defense to attack. Tanky damage dealer but needs ramp-up.',
-    conchDesc: 'Team support with beacon towers and shock towers. Provides shields and damage buffs.',
-    spaceDesc: 'Orbital mark chase system with shield counter. More marks = more damage.',
-    // Blue Flame skills
-    bfUlt: 'Blue Flame Stream', bfUltEff: 'Fires a split shell that splits into 5 blue flame shells at max height, each dealing 30% dmg and detonating burn.',
-    bfBasic: 'Blazing Shot', bfBasicEff: '85% dmg, 65% chance to add 1 burn stack (max 8).',
-    bfSkill1: 'Armor Melt Shell', bfSkill1Eff: '85% dmg. Each burn stack gives 2 turns of increased damage taken (5% per stack, max 40%).',
-    bfSkill2: 'Flame Drain', bfSkill2Eff: '85% dmg, removes all burn stacks. Each stack generates a heal orb restoring 5% max HP.',
-    bfPassive: 'Triple Shot', bfPassiveEff: 'Attacks fire 3 shots, each dealing 40% of original shell dmg.',
-    bfTactic: 'Ballistic Purification', bfTacticEff: 'Ballistic Computer LV+3, Purification LV+3.',
-    // Cupid skills
-    cupidUlt: 'Heart Storm', cupidUltEff: 'Storm shell creates tornado pushing target 1000px, 17 hits for 320% dmg. On crit: +25% action bar.',
-    cupidBasic: 'Heart Arrow', cupidBasicEff: '80% dmg, gain 100BP. On crit: +25% action bar.',
-    cupidSkill1: 'Implosion Shell', cupidSkill1Eff: '90% AoE dmg. If crit, next attack ignores 40% target defense.',
-    cupidSkill2: 'Heart Snatch Mark', cupidSkill2Eff: '100% dmg + 3 turns Charm. Enemy deals 35% less dmg to caster.',
-    cupidPassive: 'Relentless Pursuit', cupidPassiveEff: 'On consecutive action: +25% atk this turn, gain 100BP.',
-    cupidTactic: 'Advanced Sniper Enhance', cupidTacticEff: 'Mag+1 LV+3, Optical Camo LV+3.',
-    // Dragon skills
-    dragonUlt: 'Dragon Breath Chain', dragonUltEff: '80% main shell + 3 waves of fireballs (5x20%). 30% def→atk. Each Dragon Breath stack: +5% shell dmg.',
-    dragonBasic: 'Dragon Breath Bomb', dragonBasicEff: '30% def→atk, 80% dmg, gain 100BP.',
-    dragonSkill1: 'Dragon Qi Shell', dragonSkill1Eff: '120% + 30% bonus def dmg. At 5+ Dragon Breath: enhanced to 200%.',
-    dragonSkill2: 'Dragon Breath Plate', dragonSkill2Eff: 'AoE pull + 45% dmg reduction 1 turn. At 5+ Dragon Breath: +20% dmg red, larger range.',
-    dragonPassive: 'Dragon Breath Conversion', dragonPassiveEff: 'Gain 1 Dragon Breath stack when hit (1 turn). Each stack: 3% dmg reduction, max 10.',
-    dragonTactic: 'Advanced Rapid Fire Enhance', dragonTacticEff: 'Mag+2 LV+3, Scatter LV+3.',
-    // Conch skills
-    conchUlt: 'Ocean Current Boost', conchUltEff: 'Team shield (armor×4) 1 turn, self 2 turns. All allies: +40% atk + stealth 2 turns, remove debuffs.',
-    conchBasic: 'Ocean Current Bomb', conchBasicEff: '5% max HP→atk, 80% dmg. +15% dmg per friendly tower (max 60%).',
-    conchSkill1: 'Armed Beacon', conchSkill1Eff: 'Place beacon: allies in range +20% atk +40% def. Max 1 at a time.',
-    conchSkill2: 'Shock Tower', conchSkill2Eff: 'Place tower: deals 150% dmg to 2 enemies in 1000 range each turn. Lasts 4 turns.',
-    conchPassive: 'Energy Feedback', conchPassiveEff: 'End of turn: restore 5% HP per friendly tower (max 15%).',
-    conchTactic: 'Advanced Loading Enhance', conchTacticEff: 'Charge Can LV+3, Energy Can LV+3.',
-    // Shark skills
-    sharkUlt: 'Mega Shark!', sharkUltEff: 'Bait bomb: 120% dmg + 3 bleed on path, summon shark 120% true dmg. +1 attack per 10 bleed stacks.',
-    sharkBasic: 'Tear Shell', sharkBasicEff: '90% dmg, 100% apply 1 bleed (max 20, undispellable). Each stack: -1.5% HP & -2.5% healing.',
-    sharkSkill1: 'Shark Tooth Trap', sharkSkill1Eff: '100% dmg + 4 traps. Trapped: extra dmg + immobile + 3 bleed. At 20 bleed: immobile→stun.',
-    sharkSkill2: 'Bloodhunter Shark', sharkSkill2Eff: 'Homing shark shell along terrain: 90% true dmg + 1 bleed.',
-    sharkPassive: 'Tough Skin', sharkPassiveEff: 'First damage taken each public turn: -50%.',
-    sharkTactic: 'Ballistic Purification', sharkTacticEff: 'Ballistic Computer LV+3, Purification LV+3.',
-    // Cat skills
-    catUlt: 'Cat Trap', catUltEff: 'Throw yarn ball, summon 15 cats: 35% + 5% max HP dmg. On armor break: +2 cats +140% dmg.',
-    catBasic: 'Multi Scratch', catBasicEff: '5% max HP→atk, 70% dmg. On armor break: +1 cat dealing 70% dmg.',
-    catSkill1: 'Armor Break Shell', catSkill1Eff: '80% + 5% max HP dmg. High armor break effect.',
-    catSkill2: 'Suppression Attack', catSkill2Eff: '85% + 5% max HP dmg. Kills non-player: restore all pets 30% HP + 40% MP.',
-    catPassive: 'Reuse', catPassiveEff: 'On armor break: gain 25% HP shield for 2 turns, +8% atk this match (max 5 stacks).',
-    catTactic: 'Life Energy Enhancement', catTacticEff: 'Life Tonic LV+3, Energy Can LV+3.',
-    // Space Cannon skills
-    spaceUlt: 'Orbital Bombardment', spaceUltEff: 'Flare 50% dmg → laser 600 range, 350% total dmg. All allies: +30% action bar.',
-    spaceBasic: 'Mark Shot', spaceBasicEff: '30% def→atk, 80% dmg. Marked targets trigger additional orbital shells (60% each +100BP).',
-    spaceSkill1: 'Mark Shell', spaceSkill1Eff: '400 range 85% dmg, apply 2 Orbital Marks.',
-    spaceSkill2: 'Reflect Shield', spaceSkill2Eff: '35% armor shield + 20% dmg red + reflect, lasts 2 turns.',
-    spacePassive: 'Nano Armor', spacePassiveEff: '-20% incoming dmg. Attackers gain 1 mark (max 1/turn, max 3 total).',
-    spaceTactic: 'Advanced Rapid Fire Enhance', spaceTacticEff: 'Mag+2 LV+3, Scatter LV+3.',
-    // Pricing
-    pricingTitle: 'Pricing & Top-up', pricingDesc: 'App Store IAP price tiers and diamond reference.',
-    iapTiers: 'IAP Tiers', paymentMethods: 'Payment Methods', paymentDesc: 'Supported payment channels:',
-    moreChannels: 'More third-party platforms', priceNote: '* Actual prices may vary by region and exchange rate. Check in-game store.',
-    tier1: 'Basic Pack', tier2: 'Small Pack', tier3: 'Standard Pack', tier5: 'Special Pack',
-    tier10: 'Premium Pack', tier15: 'Elite Pack', tier20: 'Deluxe Pack', tier24: 'Super Pack',
-    tier50: 'Epic Pack', tier60: 'Ultimate Pack', bestValue: 'Best Value',
-    // Currency
-    currencyTitle: 'Currency System', currencyDesc: 'Complete guide to in-game currencies and resources.',
-    curDiamond: 'Diamonds', curDiamondDesc: 'Premium currency for weapon gacha and special items.', curDiamondSrc: 'Purchase, event rewards',
-    curGold: 'Gold / Bound Diamonds', curGoldDesc: 'Basic currency for daily use and weapon upgrades.', curGoldSrc: 'Adventure stars, daily tasks, events',
-    curBp: '(BP)', curBpDesc: 'Action resource per turn. Skills consume BP.', curBpSrc: 'Hitting targets with basic attacks',
-    curAnger: 'Anger', curAngerDesc: 'Builds up to unleash ultimate skills.', curAngerSrc: 'Dealing and taking damage',
-    curSpDesc: 'Weapon skill resource. Different skills have different costs.', curSpSrc: 'Natural recovery per turn, specific items',
-    curCrystal: 'Energy / Crystals', curCrystalDesc: 'Scattered on map, collected to use special abilities.', curCrystalSrc: 'Battlefield collection, hitting crystals',
-    curExp: 'EXP (Experience)', curExpDesc: 'Level up your account to unlock more content.', curExpSrc: 'Battles, daily/weekly tasks, battle pass',
-    source: 'Source: ',
-    // Pets
-    petsTitle: 'Pet Guide', petsDesc: 'Adorable companions that provide unique combat buffs.',
-    petBee: 'Bee', petBeeEff: 'Slows enemy movement speed',
-    petGhost: 'Ghost', petGhostEff: 'Grants extra turn time',
-    petBug: 'Bug', petBugEff: 'Deals bonus AoE damage',
-    petPhantom: 'Phantom', petPhantomEff: 'Increases attack power',
-    petWizard: 'Wizard', petWizardEff: 'Provides healing and shields',
-    petMore: 'More Pets', petMoreEff: 'Discover more pets in-game through events and gacha!',
-    petSystem: 'Pet System',
-    petNote1: 'Pets can be leveled up to enhance their abilities.',
-    petNote2: 'Pets activate automatically under certain conditions.',
-    petNote3: 'Choosing a pet that matches your playstyle provides significant advantages.',
-    petNote4: 'Some weapon skills interact with pets (e.g., Cat Attack\'s Suppression).',
-    // Modes
-    modesTitle: 'Game Modes', modesDesc: 'Learn about core mechanics and all game modes.',
-    coreMech: 'Core Mechanics', gameModes: 'Game Modes',
-    mechAim: 'Ballistic Aiming', mechAimDesc: 'Pull barrel → Set angle → Control power → Consider wind → Fire!',
-    mechWind: 'Wind System', mechWindDesc: 'Wind direction and speed affect trajectory. Adjust aim in real-time.',
-    mechTerrain: 'Terrain Destruction', mechTerrainDesc: 'Shells destroy terrain. Bury enemies in craters for instant wins!',
-    mechTurn: 'Turn-based Combat', mechTurnDesc: 'One action per turn. Use basic attacks, skills, or movement items.',
-    modeAdventure: 'Adventure (PvE)', modeAdventureDesc: 'Fight AI enemies, practice aiming and wind reading. Includes boss battles. Great for beginners.',
-    modeRanked: 'Ranked (PvP)', modeRankedDesc: '1v1 or team battles to climb ranks. Wins grant EXP and currency.',
-    mode3v3: '3v3 Team Battle', mode3v3Desc: '3-player team battles with real-time voice chat coordination.',
-    modeGuild: 'Guild War', modeGuildDesc: 'Guild vs guild battles for honor and rewards.',
-    modeFriendly: 'Friendly Match', modeFriendlyDesc: 'Casual matches with friends. No ranking impact.',
-    modeBoss: 'Solo Boss', modeBossDesc: 'Challenge powerful bosses alone. Test your maximum firepower!',
-    // Tips
-    tipsTitle: 'Beginner Guide', tipsDesc: 'Practical tips to get started with Ballistic Hero.',
-    quickTips: 'Quick Start Tips', f2pTips: 'F2P & Low Spender Tips',
-    tip1: 'Start in Adventure Mode — safe environment to learn aiming, wind, and terrain mechanics.',
-    tip2: 'Choose Blue Flame as your first weapon — simple, self-healing, and forgiving.',
-    tip3: 'Positioning matters! High ground + cover forces enemies into difficult shots.',
-    tip4: 'Use movement skills wisely — secure good position even if it delays your attack.',
-    tip5: 'Complete daily tasks and activity rewards every day for steady resource income.',
-    tip6: 'Follow official social media for redeem codes and free rewards.',
-    tip7: 'Upgrade weapons before pets — weapons have a more direct impact on combat power.',
-    tip8: 'Use voice chat in team modes — communication is key to victory!',
-    f2pTip1: '• The game is F2P-friendly. Ranked rewards are available to all players.',
-    f2pTip2: '• Spend diamonds on weapon gacha first. Choose weapons that suit your playstyle.',
-    f2pTip3: '• Save bound diamonds for limited-time events. Don\'t spend them all at once.',
-    f2pTip4: '• Always complete daily and weekly tasks — they\'re your main free resource income.',
-    f2pTip5: '• For low spenders, start with the $4.99 and $9.99 packs — best value for money.',
-    footerText: 'Ballistic Hero Guide · Data sourced from game and player community · Unofficial site',
-    footerContact: 'Corrections or additions? Feedback welcome.'
+    langLabel:'Language',tabHome:'Home',tabWeapons:'Weapons',tabEquipment:'Equipment',tabPets:'Pets',
+    heroTitle:'Ballistic Hero',heroDesc:'A globally popular multiplayer online casual battle game. Control unique weapons, calculate angles and power, select ammo types, and battle across various terrains. Published by VNG.',
+    rating:'Rating',size:'Size',version:'Version',publisher:'Publisher',iap:'IAP',
+    navCardWeaponTitle:'Weapons',navCardWeaponDesc:'7 Legendary weapons with complete skill data',
+    navCardEquipTitle:'Equipment',navCardEquipDesc:'Modules, armor upgrades, and battle items',
+    navCardPetTitle:'Pets',navCardPetDesc:'Pet companions and their effects',
+    currencyTitle:'Currency System',currencyDesc:'Guide to in-game currencies and resources.',
+    curDiamond:'Diamonds',curDiamondDesc:'Premium currency for gacha and special items.',curDiamondSrc:'Purchase, events',
+    curGold:'Gold / Bound Diamonds',curGoldDesc:'Basic currency for daily use and upgrades.',curGoldSrc:'Adventure stars, tasks, events',
+    curBp:'(BP)',curBpDesc:'Action resource per turn.',curBpSrc:'Hitting targets with basic attacks',
+    curAnger:'Anger',curAngerDesc:'Builds up to unleash ultimate skills.',curAngerSrc:'Dealing and taking damage',
+    curSpDesc:'Weapon skill resource.',curSpSrc:'Natural recovery, specific items',
+    curCrystal:'Energy / Crystals',curCrystalDesc:'Scattered on map for special abilities.',curCrystalSrc:'Field collection, hitting crystals',
+    curExp:'EXP',curExpDesc:'Level up to unlock more content.',curExpSrc:'Battles, tasks, battle pass',
+    source:'Source: ',
+    footerText:'Ballistic Hero Guide · Data sourced from game and community · Unofficial site',
+    footerContact:'Corrections or additions? Feedback welcome.'
   }
 };
-
 let currentLang = localStorage.getItem('bh_lang') || 'zh';
-
 function applyLang(lang) {
   currentLang = lang;
   const dict = i18n[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (dict[key] !== undefined) {
-      el.textContent = dict[key];
-    }
+    if (dict[key] !== undefined) el.textContent = dict[key];
   });
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   document.getElementById('langToggle').textContent = lang === 'zh' ? 'English' : '中文';
   localStorage.setItem('bh_lang', lang);
 }
-
-function toggleLang() {
-  applyLang(currentLang === 'zh' ? 'en' : 'zh');
-}
-
-// Weapon toggle
-function toggleWeapon(card) {
-  card.classList.toggle('expanded');
-}
-
-// Nav scroll spy
-document.querySelectorAll('nav a').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
-
-// Initialize
+function toggleLang() { applyLang(currentLang === 'zh' ? 'en' : 'zh'); }
 applyLang(currentLang);
 </script>
 </body>
