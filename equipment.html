@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipment - Ballistic Hero 攻略站 · 弹弹英雄</title>
+<meta name="description" content="Ballistic Hero 装备系统 — 武器模块、装甲强化、配件道具完整指南">
+<style>
+:root {
+  --bg: #0a0e1a; --bg-card: #111827; --bg-card-alt: #1a2332;
+  --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+  --accent: #f59e0b; --accent-light: #fbbf24; --accent-dim: #d97706;
+  --blue: #3b82f6; --blue-light: #60a5fa; --green: #22c55e; --red: #ef4444; --purple: #a855f7;
+  --border: #1e293b; --border-light: #334155;
+  --radius: 12px; --radius-sm: 8px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+a { color:var(--blue-light); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header { background:linear-gradient(135deg,#0f172a,#1a2332,#0f172a); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; padding:0 20px; }
+.header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { display:flex; align-items:center; gap:10px; font-size:18px; font-weight:700; color:var(--accent); }
+.logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent-dim)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; color:#000; font-weight:900; }
+.lang-btn { background:var(--bg-card-alt); border:1px solid var(--border-light); color:var(--text); padding:6px 14px; border-radius:20px; cursor:pointer; font-size:13px; transition:all .2s; }
+.lang-btn:hover { border-color:var(--accent); color:var(--accent); }
+.lang-toggle-wrap { display:flex; align-items:center; gap:10px; }
+.lang-label { font-size:12px; color:var(--text-muted); }
+.tabs { background:var(--bg-card); border-bottom:1px solid var(--border); overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+.tabs-inner { max-width:1200px; margin:0 auto; display:flex; padding:0 20px; }
+.tab { display:block; padding:12px 22px; font-size:14px; color:var(--text-secondary); border-bottom:2px solid transparent; transition:all .2s; }
+.tab:hover { color:var(--accent); text-decoration:none; }
+.tab.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:500; }
+main { max-width:1200px; margin:0 auto; padding:30px 20px; }
+section { margin-bottom:50px; }
+.section-title { font-size:24px; font-weight:700; color:var(--accent); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.section-desc { color:var(--text-secondary); font-size:14px; margin-bottom:24px; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+.card-title { font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.equip-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+.equip-card { background:var(--bg-card-alt); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+.equip-icon { font-size:32px; margin-bottom:8px; }
+.equip-name { font-weight:700; font-size:16px; margin-bottom:6px; }
+.equip-desc { color:var(--text-secondary); font-size:13px; line-height:1.7; }
+.equip-stats { margin-top:10px; padding:10px; background:var(--bg); border-radius:var(--radius-sm); font-size:13px; color:var(--text-secondary); }
+.equip-stats strong { color:var(--accent-light); }
+.badge { background:var(--bg-card-alt); border:1px solid var(--border-light); border-radius:6px; padding:8px 14px; font-size:13px; display:inline-flex; align-items:center; gap:6px; }
+footer { border-top:1px solid var(--border); padding:30px 20px; text-align:center; color:var(--text-muted); font-size:13px; }
+.info-box { background:var(--bg-card-alt); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin-bottom:20px; }
+.info-box p { color:var(--text-secondary); font-size:14px; line-height:1.8; }
+@media (max-width:768px) { .equip-grid { grid-template-columns:1fr; } .tab { padding:10px 14px; font-size:13px; } }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border-light); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--text-muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" style="text-decoration:none">
+      <div class="logo-icon">BH</div>
+      <span>Ballistic Hero</span>
+    </a>
+    <div class="lang-toggle-wrap">
+      <span class="lang-label" data-i18n="langLabel">语言</span>
+      <button class="lang-btn" id="langToggle" onclick="toggleLang()">English</button>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tabs-inner">
+    <a href="index.html" class="tab" data-i18n="tabHome">首页</a>
+    <a href="weapons.html" class="tab" data-i18n="tabWeapons">武器</a>
+    <a href="equipment.html" class="tab active" data-i18n="tabEquipment">装备</a>
+    <a href="pets.html" class="tab" data-i18n="tabPets">宠物</a>
+  </div>
+</div>
+
+<main>
+
+<section>
+  <h2 class="section-title">🛡️ <span data-i18n="equipTitle">装备系统</span></h2>
+  <p class="section-desc" data-i18n="equipDesc">武器模块、装甲强化、道具系统详解，提升战斗力从这里开始</p>
+
+  <!-- 武器模块 -->
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;color:var(--accent-light);">⚙️ <span data-i18n="moduleTitle">武器模块 (Modules)</span></h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <div class="equip-icon">📦</div>
+      <div class="equip-name" data-i18n="modAmmo">弹药容量模块</div>
+      <div class="equip-desc" data-i18n="modAmmoDesc">增加武器弹仓容量，允许在单回合内发射更多炮弹。提升持续输出能力</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="modAmmoStats">弹仓+1~3，每级提升1发备弹</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">💚</div>
+      <div class="equip-name" data-i18n="modHeal">回合治疗模块</div>
+      <div class="equip-desc" data-i18n="modHealDesc">每回合结束时恢复一定比例生命值，提升续航能力，适合持久战</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="modHealStats">每回合恢复3%~8%最大生命值</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">💥</div>
+      <div class="equip-name" data-i18n="modDmg">伤害增强模块</div>
+      <div class="equip-desc" data-i18n="modDmgDesc">提升武器基础伤害输出，适用于所有类型的攻击</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="modDmgStats">伤害+5%~15%，随等级提升</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">🎯</div>
+      <div class="equip-name" data-i18n="modAcc">精准瞄准模块</div>
+      <div class="equip-desc" data-i18n="modAccDesc">减少炮弹散布范围，提升命中率，适合远距离精确打击</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="modAccStats">散布范围-10%~30%</span></div>
+    </div>
+  </div>
+
+  <!-- 装甲系统 -->
+  <h3 style="font-size:18px;font-weight:700;margin:30px 0 16px;color:var(--accent-light);">🛡️ <span data-i18n="armorTitle">装甲系统</span></h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <div class="equip-icon">🛡️</div>
+      <div class="equip-name" data-i18n="armorBase">基础装甲</div>
+      <div class="equip-desc" data-i18n="armorBaseDesc">提供基础伤害减免，所有玩家默认拥有。可通过升级提升减伤比例</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="armorBaseStats">减伤+5%~20%</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">🔄</div>
+      <div class="equip-name" data-i18n="armorReflect">反伤装甲</div>
+      <div class="equip-desc" data-i18n="armorReflectDesc">受到攻击时反弹部分伤害给攻击者，适合坦克型打法</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="armorReflectStats">反弹所受伤害的15%~35%</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">🔰</div>
+      <div class="equip-name" data-i18n="armorShield">护盾发生器</div>
+      <div class="equip-desc" data-i18n="armorShieldDesc">每场战斗开始时获得额外护盾值，护盾可吸收一定量伤害</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="armorShieldStats">初始护盾+500~2000点</span></div>
+    </div>
+  </div>
+
+  <!-- 消耗品 -->
+  <h3 style="font-size:18px;font-weight:700;margin:30px 0 16px;color:var(--accent-light);">🧪 <span data-i18n="itemTitle">战斗道具</span></h3>
+  <div class="equip-grid">
+    <div class="equip-card">
+      <div class="equip-icon">❤️</div>
+      <div class="equip-name" data-i18n="itemHeal">治疗药剂</div>
+      <div class="equip-desc" data-i18n="itemHealDesc">战斗中使用的消耗品，立即恢复一定比例生命值</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="itemHealStats">恢复20%~40%最大生命值</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">⚡</div>
+      <div class="equip-name" data-i18n="itemEnergy">能量饮料</div>
+      <div class="equip-desc" data-i18n="itemEnergyDesc">立即恢复 SP/能量值，让你能更快释放武器技能</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="itemEnergyStats">恢复50~150 SP</span></div>
+    </div>
+    <div class="equip-card">
+      <div class="equip-icon">💨</div>
+      <div class="equip-name" data-i18n="itemMove">传送道具</div>
+      <div class="equip-desc" data-i18n="itemMoveDesc">立即传送到指定位置，用于调整站位或躲避攻击</div>
+      <div class="equip-stats"><strong data-i18n="effect">效果：</strong><span data-i18n="itemMoveStats">传送距离 200~500 像素</span></div>
+    </div>
+  </div>
+
+  <!-- 升级提示 -->
+  <div class="info-box">
+    <p data-i18n="upgradeNote">
+      💡 提示：装备和模块可以通过日常任务、活动奖励获取升级材料。优先升级武器模块对战斗力提升最直接，其次为装甲系统。
+    </p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p data-i18n="footerText">Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点</p>
+  <p style="margin-top:6px;font-size:12px;" data-i18n="footerContact">如有错误或补充，欢迎反馈</p>
+</footer>
+
+<script>
+const i18n = {
+  zh: {
+    langLabel:'语言',tabHome:'首页',tabWeapons:'武器',tabEquipment:'装备',tabPets:'宠物',
+    equipTitle:'装备系统',equipDesc:'武器模块、装甲强化、道具系统详解，提升战斗力从这里开始',
+    moduleTitle:'武器模块 (Modules)',
+    modAmmo:'弹药容量模块',modAmmoDesc:'增加武器弹仓容量，提升持续输出能力',modAmmoStats:'弹仓+1~3，每级提升1发备弹',
+    modHeal:'回合治疗模块',modHealDesc:'每回合恢复一定比例生命值，提升续航能力',modHealStats:'每回合恢复3%~8%最大生命值',
+    modDmg:'伤害增强模块',modDmgDesc:'提升武器基础伤害输出',modDmgStats:'伤害+5%~15%，随等级提升',
+    modAcc:'精准瞄准模块',modAccDesc:'减少炮弹散布范围，提升命中率',modAccStats:'散布范围-10%~30%',
+    armorTitle:'装甲系统',
+    armorBase:'基础装甲',armorBaseDesc:'提供基础伤害减免',armorBaseStats:'减伤+5%~20%',
+    armorReflect:'反伤装甲',armorReflectDesc:'受到攻击时反弹部分伤害',armorReflectStats:'反弹所受伤害的15%~35%',
+    armorShield:'护盾发生器',armorShieldDesc:'每场战斗开始时获得额外护盾',armorShieldStats:'初始护盾+500~2000点',
+    itemTitle:'战斗道具',
+    itemHeal:'治疗药剂',itemHealDesc:'立即恢复一定比例生命值',itemHealStats:'恢复20%~40%最大生命值',
+    itemEnergy:'能量饮料',itemEnergyDesc:'立即恢复SP/能量值',itemEnergyStats:'恢复50~150 SP',
+    itemMove:'传送道具',itemMoveDesc:'立即传送到指定位置',itemMoveStats:'传送距离200~500像素',
+    effect:'效果：',
+    upgradeNote:'💡 提示：装备和模块可以通过日常任务、活动奖励获取升级材料。优先升级武器模块对战斗力提升最直接，其次为装甲系统。',
+    footerText:'Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点',
+    footerContact:'如有错误或补充，欢迎反馈'
+  },
+  en: {
+    langLabel:'Language',tabHome:'Home',tabWeapons:'Weapons',tabEquipment:'Equipment',tabPets:'Pets',
+    equipTitle:'Equipment System',equipDesc:'Weapon modules, armor upgrades, and item guide.',
+    moduleTitle:'Weapon Modules',
+    modAmmo:'Ammo Capacity',modAmmoDesc:'Increase ammo capacity for sustained DPS.',modAmmoStats:'Mag+1~3 per level',
+    modHeal:'Heal Module',modHealDesc:'Restore HP each turn for better sustain.',modHealStats:'3%~8% max HP per turn',
+    modDmg:'Damage Module',modDmgDesc:'Increase base weapon damage output.',modDmgStats:'+5%~15% damage',
+    modAcc:'Accuracy Module',modAccDesc:'Reduce shell spread for better accuracy.',modAccStats:'-10%~30% spread',
+    armorTitle:'Armor System',
+    armorBase:'Base Armor',armorBaseDesc:'Basic damage reduction.',armorBaseStats:'+5%~20% dmg reduction',
+    armorReflect:'Reflect Armor',armorReflectDesc:'Reflect damage back to attackers.',armorReflectStats:'Reflect 15%~35% dmg',
+    armorShield:'Shield Generator',armorShieldDesc:'Bonus shield at battle start.',armorShieldStats:'+500~2000 shield',
+    itemTitle:'Battle Items',
+    itemHeal:'Heal Potion',itemHealDesc:'Restore HP immediately.',itemHealStats:'Restore 20%~40% max HP',
+    itemEnergy:'Energy Drink',itemEnergyDesc:'Restore SP/energy instantly.',itemEnergyStats:'Restore 50~150 SP',
+    itemMove:'Teleport Item',itemMoveDesc:'Teleport to a position.',itemMoveStats:'Range 200~500px',
+    effect:'Effect: ',
+    upgradeNote:'💡 Tip: Upgrade materials can be obtained through daily tasks and events. Prioritize weapon modules for best combat gains.',
+    footerText:'Ballistic Hero Guide · Data sourced from game and community · Unofficial site',
+    footerContact:'Corrections or additions? Feedback welcome.'
+  }
+};
+let currentLang = localStorage.getItem('bh_lang') || 'zh';
+function applyLang(lang) {
+  currentLang = lang;
+  const dict = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('langToggle').textContent = lang === 'zh' ? 'English' : '中文';
+  localStorage.setItem('bh_lang', lang);
+}
+function toggleLang() { applyLang(currentLang === 'zh' ? 'en' : 'zh'); }
+applyLang(currentLang);
+</script>
+</body>
+</html>
