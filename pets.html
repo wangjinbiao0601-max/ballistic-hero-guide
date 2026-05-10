@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pets - Ballistic Hero 攻略站 · 弹弹英雄</title>
+<meta name="description" content="Ballistic Hero 宠物图鉴 — 蜜蜂、幽灵、甲虫、幻影、巫师等宠物的效果与获取方式">
+<style>
+:root {
+  --bg: #0a0e1a; --bg-card: #111827; --bg-card-alt: #1a2332;
+  --text: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+  --accent: #f59e0b; --accent-light: #fbbf24; --accent-dim: #d97706;
+  --blue: #3b82f6; --blue-light: #60a5fa; --green: #22c55e; --red: #ef4444; --purple: #a855f7;
+  --border: #1e293b; --border-light: #334155;
+  --radius: 12px; --radius-sm: 8px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+a { color:var(--blue-light); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header { background:linear-gradient(135deg,#0f172a,#1a2332,#0f172a); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; padding:0 20px; }
+.header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { display:flex; align-items:center; gap:10px; font-size:18px; font-weight:700; color:var(--accent); }
+.logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent-dim)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; color:#000; font-weight:900; }
+.lang-btn { background:var(--bg-card-alt); border:1px solid var(--border-light); color:var(--text); padding:6px 14px; border-radius:20px; cursor:pointer; font-size:13px; transition:all .2s; }
+.lang-btn:hover { border-color:var(--accent); color:var(--accent); }
+.lang-toggle-wrap { display:flex; align-items:center; gap:10px; }
+.lang-label { font-size:12px; color:var(--text-muted); }
+.tabs { background:var(--bg-card); border-bottom:1px solid var(--border); overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+.tabs-inner { max-width:1200px; margin:0 auto; display:flex; padding:0 20px; }
+.tab { display:block; padding:12px 22px; font-size:14px; color:var(--text-secondary); border-bottom:2px solid transparent; transition:all .2s; }
+.tab:hover { color:var(--accent); text-decoration:none; }
+.tab.active { color:var(--accent); border-bottom-color:var(--accent); font-weight:500; }
+main { max-width:1200px; margin:0 auto; padding:30px 20px; }
+section { margin-bottom:50px; }
+.section-title { font-size:24px; font-weight:700; color:var(--accent); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.section-desc { color:var(--text-secondary); font-size:14px; margin-bottom:24px; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+.card-title { font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.pet-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; }
+.pet-card { background:var(--bg-card-alt); border:1px solid var(--border); border-radius:var(--radius-sm); padding:18px; text-align:center; }
+.pet-name { font-weight:700; font-size:15px; margin-top:8px; }
+.pet-effect { color:var(--text-secondary); font-size:13px; margin-top:6px; }
+footer { border-top:1px solid var(--border); padding:30px 20px; text-align:center; color:var(--text-muted); font-size:13px; }
+@media (max-width:768px) { .pet-grid { grid-template-columns:repeat(2,1fr); } .tab { padding:10px 14px; font-size:13px; } }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border-light); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--text-muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" style="text-decoration:none">
+      <div class="logo-icon">BH</div>
+      <span>Ballistic Hero</span>
+    </a>
+    <div class="lang-toggle-wrap">
+      <span class="lang-label" data-i18n="langLabel">语言</span>
+      <button class="lang-btn" id="langToggle" onclick="toggleLang()">English</button>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tabs-inner">
+    <a href="index.html" class="tab" data-i18n="tabHome">首页</a>
+    <a href="weapons.html" class="tab" data-i18n="tabWeapons">武器</a>
+    <a href="equipment.html" class="tab" data-i18n="tabEquipment">装备</a>
+    <a href="pets.html" class="tab active" data-i18n="tabPets">宠物</a>
+  </div>
+</div>
+
+<main>
+<section>
+  <h2 class="section-title">🐾 <span data-i18n="petsTitle">宠物图鉴</span></h2>
+  <p class="section-desc" data-i18n="petsDesc">在战斗中提供独特增益的萌宠伙伴，可通过活动、抽奖获取</p>
+
+  <div class="pet-grid">
+    <div class="pet-card">
+      <img src="images/pet_bee.png" alt="Bee" loading="lazy" style="width:64px;height:64px;object-fit:contain;">
+      <div class="pet-name">Bee / <span data-i18n="petBee">蜜蜂</span></div>
+      <div class="pet-effect" data-i18n="petBeeEff">减缓敌人移动速度</div>
+    </div>
+    <div class="pet-card">
+      <img src="images/pet_ghost1.png" alt="Ghost" loading="lazy" style="width:64px;height:64px;object-fit:contain;">
+      <div class="pet-name">Ghost / <span data-i18n="petGhost">幽灵</span></div>
+      <div class="pet-effect" data-i18n="petGhostEff">获得额外行动时间</div>
+    </div>
+    <div class="pet-card">
+      <img src="images/pet_bug.png" alt="Bug" loading="lazy" style="width:64px;height:64px;object-fit:contain;">
+      <div class="pet-name">Bug / <span data-i18n="petBug">甲虫</span></div>
+      <div class="pet-effect" data-i18n="petBugEff">造成额外范围伤害</div>
+    </div>
+    <div class="pet-card">
+      <img src="images/pet_ghost2.png" alt="Phantom" loading="lazy" style="width:64px;height:64px;object-fit:contain;">
+      <div class="pet-name">Phantom / <span data-i18n="petPhantom">幻影</span></div>
+      <div class="pet-effect" data-i18n="petPhantomEff">提升攻击力</div>
+    </div>
+    <div class="pet-card">
+      <img src="images/pet_wizard.png" alt="Wizard" loading="lazy" style="width:64px;height:64px;object-fit:contain;">
+      <div class="pet-name">Wizard / <span data-i18n="petWizard">巫师</span></div>
+      <div class="pet-effect" data-i18n="petWizardEff">提供治疗和护盾</div>
+    </div>
+    <div class="pet-card" style="border-style:dashed;">
+      <div style="font-size:36px;margin-bottom:8px;">❓</div>
+      <div class="pet-name" data-i18n="petMore">更多宠物</div>
+      <div class="pet-effect" data-i18n="petMoreEff">游戏中还有更多宠物等你发现！</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title" data-i18n="petSystem">宠物系统说明</div>
+    <ul style="padding-left:20px;color:var(--text-secondary);font-size:14px;line-height:2;">
+      <li data-i18n="petNote1">宠物可以通过升级来增强能力</li>
+      <li data-i18n="petNote2">宠物会在特定条件下自动激活</li>
+      <li data-i18n="petNote3">选择匹配你玩法的宠物可获得显著优势</li>
+      <li data-i18n="petNote4">部分武器技能可与宠物联动（如猫咪出击的压制攻击）</li>
+      <li data-i18n="petNote5">宠物可通过武器研究所抽奖、活动奖励、幸运营商店获取</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p data-i18n="footerText">Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点</p>
+  <p style="margin-top:6px;font-size:12px;" data-i18n="footerContact">如有错误或补充，欢迎反馈</p>
+</footer>
+
+<script>
+const i18n = {
+  zh: {
+    langLabel:'语言',tabHome:'首页',tabWeapons:'武器',tabEquipment:'装备',tabPets:'宠物',
+    petsTitle:'宠物图鉴',petsDesc:'在战斗中提供独特增益的萌宠伙伴，可通过活动、抽奖获取',
+    petBee:'蜜蜂',petBeeEff:'减缓敌人移动速度',
+    petGhost:'幽灵',petGhostEff:'获得额外行动时间',
+    petBug:'甲虫',petBugEff:'造成额外范围伤害',
+    petPhantom:'幻影',petPhantomEff:'提升攻击力',
+    petWizard:'巫师',petWizardEff:'提供治疗和护盾',
+    petMore:'更多宠物',petMoreEff:'游戏中还有更多宠物等你发现！',
+    petSystem:'宠物系统说明',
+    petNote1:'宠物可以通过升级来增强能力',
+    petNote2:'宠物会在特定条件下自动激活',
+    petNote3:'选择匹配你玩法的宠物可获得显著优势',
+    petNote4:'部分武器技能可与宠物联动（如猫咪出击的压制攻击）',
+    petNote5:'宠物可通过武器研究所抽奖、活动奖励、幸运营商店获取',
+    footerText:'Ballistic Hero 攻略站 · 数据来源于游戏与玩家社区 · 非官方站点',
+    footerContact:'如有错误或补充，欢迎反馈'
+  },
+  en: {
+    langLabel:'Language',tabHome:'Home',tabWeapons:'Weapons',tabEquipment:'Equipment',tabPets:'Pets',
+    petsTitle:'Pet Guide',petsDesc:'Adorable companions that provide unique combat buffs. Obtainable through events and gacha.',
+    petBee:'Bee',petBeeEff:'Slows enemy movement speed',
+    petGhost:'Ghost',petGhostEff:'Grants extra turn time',
+    petBug:'Bug',petBugEff:'Deals bonus AoE damage',
+    petPhantom:'Phantom',petPhantomEff:'Increases attack power',
+    petWizard:'Wizard',petWizardEff:'Provides healing and shields',
+    petMore:'More Pets',petMoreEff:'Discover more pets in-game!',
+    petSystem:'Pet System',
+    petNote1:'Pets can be leveled up to enhance their abilities.',
+    petNote2:'Pets activate automatically under certain conditions.',
+    petNote3:'Choosing a pet that matches your playstyle provides significant advantages.',
+    petNote4:'Some weapon skills interact with pets (e.g., Cat Attack).',
+    petNote5:'Pets can be obtained through gacha, events, and lucky shop.',
+    footerText:'Ballistic Hero Guide · Data sourced from game and community · Unofficial site',
+    footerContact:'Corrections or additions? Feedback welcome.'
+  }
+};
+let currentLang = localStorage.getItem('bh_lang') || 'zh';
+function applyLang(lang) {
+  currentLang = lang;
+  const dict = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('langToggle').textContent = lang === 'zh' ? 'English' : '中文';
+  localStorage.setItem('bh_lang', lang);
+}
+function toggleLang() { applyLang(currentLang === 'zh' ? 'en' : 'zh'); }
+applyLang(currentLang);
+</script>
+</body>
+</html>
