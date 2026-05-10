@@ -357,9 +357,11 @@ function renderPets(filter) {
       const allSkills = [];
       // Step 1: add fixed skills in order
       (p.fixed || []).forEach(f => {
-        allSkills.push({name: f, isFixed: true});
-        const mid = f.match(/^(\d+)/);
-        if (mid) fixedSet.add(mid[1]);
+        const fid = f.match(/^(\d+)/)?.[1];
+        const fname = fid && SKILL_BY_ID[fid] ? SKILL_BY_ID[fid].name : null;
+        // If entry is just a bare ID, use the lookup name
+        allSkills.push({name: fid && !isNaN(parseInt(f)) ? (fname || f) : f, isFixed: true, id: fid});
+        if (fid) fixedSet.add(fid);
       });
       // Step 2: add init skills not in fixed in order
       (p.init || []).forEach(id => {
